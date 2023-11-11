@@ -8,6 +8,14 @@
 3. Make sure your Qdrant up and running
 4. Run flask --app flaskapp run --debug to start the app
 
+## API call
+Endpoint: http://127.0.0.1:5000/chatbot
+POST
+DATA FORMAT:
+{
+    "message":"How often should I renew my student permit B"
+}
+
 
 ## Steps
 
