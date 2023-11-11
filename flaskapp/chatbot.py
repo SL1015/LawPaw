@@ -33,6 +33,8 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Qdrant
 from langchain.document_loaders import TextLoader
 
+#from elasticsearch import Elasticsearch
+
 '''llm model'''
 from transformers import AutoModel, AutoTokenizer
 import torch
@@ -50,13 +52,18 @@ def average_pool(last_hidden_states: Tensor,
     last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
-def query_to_vec(query):
+def query_to_vec(query, lang):
   batch_dict = tokenizer(query, max_length=512, padding=True, truncation=True, return_tensors='pt')
 
   outputs = model(**batch_dict)
-  embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
-  embeddings = embeddings.detach().numpy()
-  embeddings = embeddings[0]
+  if lang == 'en':
+    embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
+    embeddings = embeddings.detach().numpy()
+    embeddings = embeddings[0]
+  elif lang == 'de':
+    embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
+    embeddings = embeddings.detach().numpy()
+    embeddings = embeddings[0]
 
   return embeddings
 
@@ -64,26 +71,34 @@ def doc_to_rscope(docs):
   rscope = ""
   for doc in docs:
     test = doc.payload['content']
-    current_app.logger.info(test)
+    #current_app.logger.info(test)
     rscope += test + "\n\n"
   return rscope
 
 from qdrant_client import QdrantClient
-def search_context(query):
-  query_vector = query_to_vec(query)
+def search_context(query, lang):
+  query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
-  hits = client.search(
-        collection_name="swiss-or",
-        query_vector=query_vector,
-        limit=5  # Return 5 closest points
-    )
+  if lang == 'en':
+    hits = client.search(
+          collection_name="swiss-or",
+          query_vector=query_vector,
+          limit=5  # Return 5 closest points
+      )
+  elif lang == 'de':
+    hits = client.search(
+          collection_name="swiss-de",
+          query_vector=query_vector,
+          limit=5  # Return 5 closest points
+      )
   return hits
 
 #search_context('How long is the maternity leave?')
-def qa_chatbot(query):
-  context_raw = search_context(query)
+def qa_chatbot(query, lang):
+  context_raw = search_context(query, lang)
   context = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
+  #TODO: language specific prompt engineering 
   chat_text = """
   You are a legal assistant expert on the Swiss Code of Obligations.
   Answer questions related to contract law, employment regulations,
@@ -110,22 +125,14 @@ ollama = Ollama(base_url='http://localhost:11434',
 model="mistral")
 
 # Qdrant host and port
-CollectionName = 'swiss-or'
 client = QdrantClient(host="localhost", port=6333)
 
+'''
 @chatbot_blueprint.route('/chatbot', methods=['GET'])
 def test_connection():
    current_app.logger.info(qa_chatbot('How long is the maternity leave?'))
    return qa_chatbot('How long is the maternity leave?')
-   '''query_vector = np.random.rand(384)
-   client = QdrantClient(host="localhost", port=6333)
-   hits = client.search(
-        collection_name="swiss-or",
-        query_vector=query_vector,
-        limit=5  # Return 5 closest points
-    )
-   return hits'''
-   
+'''
 
 @chatbot_blueprint.route('/chatbot', methods=['POST'])
 def getResponse():
@@ -133,12 +140,13 @@ def getResponse():
     # Get the message from the JSON request
     data = request.get_json()
     user_message = data.get('message')
-    current_app.logger.info(qa_chatbot(user_message))
+    lang = data.get('lang')
+    #current_app.logger.info(qa_chatbot(user_message, lang))
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
     #response = ollama(user_message)
-    response = qa_chatbot(user_message)
+    response = qa_chatbot(user_message, lang)
 
     '''
     query_vector = np.random.rand(384)
@@ -151,4 +159,9 @@ def getResponse():
     )'''
     
     return response
+
+
+
+
+
     

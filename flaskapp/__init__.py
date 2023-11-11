@@ -29,15 +29,16 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    query_vector = np.random.rand(384)
-    CollectionName = 'swiss-or'
-    client = QdrantClient(host="localhost", port=6333)
-    hits = client.search(
-        collection_name="swiss-or",
-        query_vector=query_vector,
-        limit=5  # Return 5 closest points
-    )
-    app.logger.info(hits)
+
+    # query_vector = np.random.rand(384)
+    # CollectionName = 'swiss-or'
+    # client = QdrantClient(host="localhost", port=6333)
+    # hits = client.search(
+    #     collection_name="swiss-or",
+    #     query_vector=query_vector,
+    #     limit=5  # Return 5 closest points
+    # )
+    # app.logger.info(hits)
     
 
     # Import and register blueprints
