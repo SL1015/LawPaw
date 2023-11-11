@@ -12,9 +12,10 @@
 Endpoint: http://127.0.0.1:5000/chatbot  
 POST  
 DATA FORMAT:  
-{
-    "message":"How often should I renew my student permit B"
-}
+{  
+    "message":"How long is the maternity leave?",  
+    "lang" : "de"  
+}  
 
 
 ## Steps
