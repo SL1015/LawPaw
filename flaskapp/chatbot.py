@@ -14,6 +14,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOllama
 from langchain.llms import HuggingFaceHub
 #from langchain import OpenAI
 from langchain.prompts import ChatPromptTemplate
@@ -80,14 +81,11 @@ def search_context(query, lang):
   query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
   if lang == 'en':
-    hits = client.search(
-          collection_name="swiss-or",
-          query_vector=query_vector,
-          limit=5  # Return 5 closest points
-      )
+    collections="swiss-or"
   elif lang == 'de':
-    hits = client.search(
-          collection_name="swiss-de",
+    collections="swiss-de"
+  hits = client.search(
+          collection_name=collections,
           query_vector=query_vector,
           limit=5  # Return 5 closest points
       )
@@ -98,6 +96,7 @@ def qa_chatbot(query, lang):
   context_raw = search_context(query, lang)
   context = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
+  ollama = ChatOllama(base_url='http://localhost:11434', model="mistral", temperature=0.1)
   #TODO: language specific prompt engineering 
   chat_text = """
   You are a legal assistant expert on the Swiss Code of Obligations.
@@ -112,7 +111,9 @@ def qa_chatbot(query, lang):
   llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
   prompt_template = ChatPromptTemplate.from_template(chat_text)
   chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
-  answer = chatgpt_llm_chain.run(context=chat_text,
+  ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
+  #answer = chatgpt_llm_chain.run(context=chat_text, query=query)
+  answer = ollama_llm_chain.run(context=chat_text,
                             query=query)
   return answer
 #########
@@ -141,12 +142,12 @@ def getResponse():
     data = request.get_json()
     user_message = data.get('message')
     lang = data.get('lang')
-    #current_app.logger.info(qa_chatbot(user_message, lang))
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
     #response = ollama(user_message)
     response = qa_chatbot(user_message, lang)
+    current_app.logger.info(response)
 
     '''
     query_vector = np.random.rand(384)

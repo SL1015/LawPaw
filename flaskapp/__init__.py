@@ -18,7 +18,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'dev'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # show executed SQL command
-    app.config['SQLALCHEMY_ECHO'] = True
+    #app.config['SQLALCHEMY_ECHO'] = True
     app.logger.info(httpx.__version__)
     db.init_app(app)
 
