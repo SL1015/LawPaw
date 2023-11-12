@@ -1,0 +1,23 @@
+.cat-select-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.cat-select-container a button {
+    padding: 2rem;
+}
+
+.back-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 2rem;
+}
+
+.back-button button {
+    padding: 1rem;
+    border-radius: 1rem;
+}

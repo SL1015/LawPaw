@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.main-nav {
+  display: flex;
+  /* padding: 48px 24px 12px 24px; */
+  justify-content: space-between;
+  align-self: stretch;
+  flex-direction: column;
+}
+
+.main-nav .progress-title h3 {
+  margin: 3rem 1.8rem 1.3rem;
+
+}
+
+.progress-bar-container {
+  color: #000!important;
+  background-color: #EAEAEA!important;
+  width: 100%;
+}
+
+.progress-bar-one {
+  color: #000!important;
+  border-radius: 1rem;
+  background-color: #1F2223!important;
+  height: 4px;
+  width: 10%;
+}
