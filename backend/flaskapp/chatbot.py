@@ -80,16 +80,33 @@ def doc_to_rscope(docs):
   return rscope,links
 
 from qdrant_client import QdrantClient
+def get_top_results(hits1,hits2):
+  combined_lst = hits1 + hits2
+  sorted_lst = sorted(combined_lst,key = lambda x:x.score,reverse=True)
+  return sorted_lst[:5]
+
 def search_context(query,lang,kanton):
   query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
-  if kanton and lang == 'de':
-    collections = 'swiss-ag'
-  if lang == 'en':
-    collections="swiss-or"
-  elif lang == 'de':
-    collections="swiss-de"
-  hits = client.search(
+  if kanton == 'ag':
+    collections1 = 'ag_init'
+    hits1 = client.search(
+          collection_name=collections1,
+          query_vector=query_vector,
+          limit=5  # Return 5 closest points
+      )
+    hits2 = client.search(
+          collection_name="swiss-de",
+          query_vector=query_vector,
+          limit=5  # Return 5 closest points
+      )
+    hits = get_top_result(hits1,hits2)
+  else:
+    if lang == 'en':
+      collections="swiss-or"
+    elif lang == 'de':
+      collections="swiss-de"
+    hits = client.search(
           collection_name=collections,
           query_vector=query_vector,
           limit=5  # Return 5 closest points
@@ -124,7 +141,6 @@ def qa_chatbot(query, lang, kanton):
   The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
   If an answer is not explicitly covered in the provided context, please indicate so.
   If the source link is not available, simply provide the code number in which the user can use as a reference.
-  Please do not include duplicate source links.
   Context: {context}
   Question: {query}
   """
