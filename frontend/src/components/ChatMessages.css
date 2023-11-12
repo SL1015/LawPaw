@@ -4,7 +4,7 @@
     margin: 0.5rem 0;
     border-color: #f3eeeaad;
     padding: 1rem;
-    border-style: solid;
+    /* border-style: solid; */
     overflow-y: auto;
     transition: all ease-in-out 0.5s;
   }
