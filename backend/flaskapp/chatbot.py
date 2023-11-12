@@ -83,10 +83,12 @@ from qdrant_client import QdrantClient
 def search_context(query, lang):
   query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
-  if lang == 'en':
+  if lang == 'en' and kanton == 'all':
     collections="swiss-or"
-  elif lang == 'de':
+  elif lang == 'de' and kanton == 'all':
     collections="swiss-de"
+  elif lang == 'de' and kanton == 'ag':
+    collections="swiss-test"
   hits = client.search(
           collection_name=collections,
           query_vector=query_vector,
@@ -120,14 +122,14 @@ def qa_chatbot(query, lang):
   Base your answers exclusively on the provided top 3 articles from the Swiss Code of Obligations.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
   The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
-  If an answer is not explicitly covered in the provided context, please indicate so.
+  If an answer is not explicitly covered in the provided context, please provide the following message: Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!
   If the source link is not available, simply provide the code number in which the user can use as a reference.
   Context: {context}
   Question: {query}
   """
-  llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
+  #llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
   prompt_template = ChatPromptTemplate.from_template(chat_text)
-  chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
+  #chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
   ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
   answer = ollama_llm_chain.run(context=chat_text,
                             query=query,source_links=links)
