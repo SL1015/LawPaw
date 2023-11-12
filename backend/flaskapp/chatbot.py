@@ -80,9 +80,11 @@ def doc_to_rscope(docs):
   return rscope,links
 
 from qdrant_client import QdrantClient
-def search_context(query, lang):
+def search_context(query,lang,kanton):
   query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
+  if kanton and lang == 'de':
+    collections = 'swiss-ag'
   if lang == 'en':
     collections="swiss-or"
   elif lang == 'de':
@@ -106,8 +108,8 @@ key_file = json.load(open("deepl_credential.json"))
 #os.environ['DEEPL_AUTH_KEY'] = key_file['key'][0]
 key_deepl =  key_file['key'][0]
 translator = deepl.Translator(key_deepl)
-def qa_chatbot(query, lang):
-  context_raw = search_context(query, lang)
+def qa_chatbot(query, lang, kanton):
+  context_raw = search_context(query, lang, kanton)
   current_app.logger.info(context_raw)
   context,links = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
@@ -120,8 +122,9 @@ def qa_chatbot(query, lang):
   Base your answers exclusively on the provided top 3 articles from the Swiss Code of Obligations.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
   The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
-  If an answer is not explicitly covered in the provided context, please provide the following message: Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!
+  If an answer is not explicitly covered in the provided context, please indicate so.
   If the source link is not available, simply provide the code number in which the user can use as a reference.
+  Please do not include duplicate source links.
   Context: {context}
   Question: {query}
   """
@@ -163,12 +166,13 @@ def getResponse():
     data = request.get_json()
     user_message = data.get('message')
     lang = data.get('lang')
+    kanton = data.get('kanton')
     current_app.logger.info(lang)
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
     #response = ollama(user_message)
-    response = qa_chatbot(user_message, lang)
+    response = qa_chatbot(user_message, lang, kanton)
     #current_app.logger.info(response)
     return response
 
