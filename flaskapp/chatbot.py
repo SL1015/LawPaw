@@ -40,12 +40,15 @@ from langchain.document_loaders import TextLoader
 from transformers import AutoModel, AutoTokenizer
 import torch
 #device = 'cuda' if torch.cuda.is_available() else 'cpu'
-tokenizer = AutoTokenizer.from_pretrained("thenlper/gte-small")
-model = AutoModel.from_pretrained("thenlper/gte-small")
+
+tokenizer_en = AutoTokenizer.from_pretrained("thenlper/gte-small")
+model_en = AutoModel.from_pretrained("thenlper/gte-small")
+tokenizer_de = AutoTokenizer.from_pretrained("thenlper/gte-base")
+model_de = AutoModel.from_pretrained("thenlper/gte-base")
 
 import openai
-key_openai = json.load(open("C:\HacknLead\lawPaw\openai_credential.json"))
-os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
+#key_openai = json.load(open("C:\HacknLead\lawPaw\openai_credential.json"))
+#os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
 
 from torch import Tensor
 def average_pool(last_hidden_states: Tensor,
@@ -54,17 +57,17 @@ def average_pool(last_hidden_states: Tensor,
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 def query_to_vec(query, lang):
-  batch_dict = tokenizer(query, max_length=512, padding=True, truncation=True, return_tensors='pt')
-
-  outputs = model(**batch_dict)
   if lang == 'en':
-    embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
-    embeddings = embeddings.detach().numpy()
-    embeddings = embeddings[0]
+    batch_dict = tokenizer_en(query, max_length=512, padding=True, truncation=True, return_tensors='pt')
+    outputs = model_en(**batch_dict)
   elif lang == 'de':
-    embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
-    embeddings = embeddings.detach().numpy()
-    embeddings = embeddings[0]
+    batch_dict = tokenizer_de(query, max_length=512, padding=True, truncation=True, return_tensors='pt')
+    outputs = model_de(**batch_dict)
+
+  embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
+  embeddings = embeddings.detach().numpy()
+  embeddings = embeddings[0]
+
 
   return embeddings
 
@@ -94,6 +97,7 @@ def search_context(query, lang):
 #search_context('How long is the maternity leave?')
 def qa_chatbot(query, lang):
   context_raw = search_context(query, lang)
+  current_app.logger.info(context_raw)
   context = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
   ollama = ChatOllama(base_url='http://localhost:11434', model="mistral", temperature=0.1)
@@ -102,9 +106,11 @@ def qa_chatbot(query, lang):
   You are a legal assistant expert on the Swiss Code of Obligations.
   Answer questions related to contract law, employment regulations,
   or corporate obligations.
-  Base your answers exclusively on the provided top 5 articles from the Swiss Code of Obligations.
+  Answer the questions in the same language as the query.
+  Base your answers exclusively on the provided top 3 articles from the Swiss Code of Obligations.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
   If an answer is not explicitly covered in the provided context, please indicate so.
+  If the source link is not available, simply provide the code number in which the user can use as a reference.
   Context: {context}
   Question: {query}
   """
@@ -147,17 +153,7 @@ def getResponse():
         return jsonify({"error": "No message provided"}), 400
     #response = ollama(user_message)
     response = qa_chatbot(user_message, lang)
-    current_app.logger.info(response)
-
-    '''
-    query_vector = np.random.rand(384)
-    CollectionName = 'swiss-or'
-    client = QdrantClient(host="localhost", port=6333)
-    hits = client.search(
-        collection_name="swiss-or",
-        query_vector=query_vector,
-        limit=5  # Return 5 closest points
-    )'''
+    #current_app.logger.info(response)
     
     return response
 
