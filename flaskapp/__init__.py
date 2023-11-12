@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from qdrant_client import QdrantClient
 import numpy as np
 import httpx
+from flask_cors import CORS
+
 
 
 db = SQLAlchemy()
@@ -13,6 +15,7 @@ db = SQLAlchemy()
 def create_app():
     # create and configure the app
     app = Flask(__name__)
+    CORS(app)
     DB_URI = 'mysql+pymysql://root:1phy187@localhost:3306/users'
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
     app.config['SECRET_KEY'] = 'dev'

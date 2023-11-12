@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, jsonify, Blueprint, current_app
+from flask_cors import CORS
 from langchain.llms import Ollama
 import requests
 import json
@@ -33,8 +34,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Qdrant
 from langchain.document_loaders import TextLoader
-
-#from elasticsearch import Elasticsearch
+import deepl
 
 '''llm model'''
 from transformers import AutoModel, AutoTokenizer
@@ -46,9 +46,7 @@ model_en = AutoModel.from_pretrained("thenlper/gte-small")
 tokenizer_de = AutoTokenizer.from_pretrained("thenlper/gte-base")
 model_de = AutoModel.from_pretrained("thenlper/gte-base")
 
-import openai
-#key_openai = json.load(open("C:\HacknLead\lawPaw\openai_credential.json"))
-#os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
+
 
 from torch import Tensor
 def average_pool(last_hidden_states: Tensor,
@@ -73,11 +71,13 @@ def query_to_vec(query, lang):
 
 def doc_to_rscope(docs):
   rscope = ""
+  links = []
   for doc in docs:
     test = doc.payload['content']
+    links.append(doc.payload['link'])
     #current_app.logger.info(test)
     rscope += test + "\n\n"
-  return rscope
+  return rscope,links
 
 from qdrant_client import QdrantClient
 def search_context(query, lang):
@@ -94,21 +94,32 @@ def search_context(query, lang):
       )
   return hits
 
+# deepl_auth_key = cfg['deepl_auth_key']
+# translator = deepl.Translator(deepl_auth_key)
+# text = "Hello I am loving this pasta"
+# result = translator.translate_text(text, target_lang="DE")
+# print(result.text)
+# print(result.detected_source_lang)
+
 #search_context('How long is the maternity leave?')
+key_file = json.load(open("deepl_credential.json"))
+#os.environ['DEEPL_AUTH_KEY'] = key_file['key'][0]
+key_deepl =  key_file['key'][0]
+translator = deepl.Translator(key_deepl)
 def qa_chatbot(query, lang):
   context_raw = search_context(query, lang)
   current_app.logger.info(context_raw)
-  context = doc_to_rscope(context_raw)
+  context,links = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
   ollama = ChatOllama(base_url='http://localhost:11434', model="mistral", temperature=0.1)
-  #TODO: language specific prompt engineering 
+  #TODO: language specific prompt engineering
   chat_text = """
   You are a legal assistant expert on the Swiss Code of Obligations.
   Answer questions related to contract law, employment regulations,
   or corporate obligations.
-  Answer the questions in the same language as the query.
   Base your answers exclusively on the provided top 3 articles from the Swiss Code of Obligations.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
+  The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
   If an answer is not explicitly covered in the provided context, please indicate so.
   If the source link is not available, simply provide the code number in which the user can use as a reference.
   Context: {context}
@@ -118,9 +129,13 @@ def qa_chatbot(query, lang):
   prompt_template = ChatPromptTemplate.from_template(chat_text)
   chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
   ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
-  #answer = chatgpt_llm_chain.run(context=chat_text, query=query)
   answer = ollama_llm_chain.run(context=chat_text,
-                            query=query)
+                            query=query,source_links=links)
+  detector = translator.translate_text(query, target_lang="DE")
+  if lang == 'en':
+    pass
+  else:
+    answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
   return answer
 #########
 
@@ -148,13 +163,13 @@ def getResponse():
     data = request.get_json()
     user_message = data.get('message')
     lang = data.get('lang')
+    current_app.logger.info(lang)
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
     #response = ollama(user_message)
     response = qa_chatbot(user_message, lang)
     #current_app.logger.info(response)
-    
     return response
 
 
