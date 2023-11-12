@@ -1,0 +1,66 @@
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* border-style: solid; */
+    height: 80vh;
+    margin: 1rem;
+    
+}
+
+.title-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+.title-container h1 {
+ word-spacing: 2px;
+ font-family: 'Ubuntu', sans-serif;
+ font-weight: 600;
+ font-size: 1.8rem;
+}
+
+.title-container p {
+    /* font-size: 14px; */
+    width: 280px;
+}
+
+.lang-select-container {
+    /* border-style: solid; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 2rem;
+    gap: 2rem;
+}
+
+.lang-select-container button {
+    width: 215px;
+    height: 48px;
+    border-radius: 2rem;
+    border-style: solid;
+    transition: all ease-in-out 0.2s;
+}
+
+
+
+.canton-select-container {
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.navigation-bar .homepage-button {
+    margin: 3rem;
+    border-radius: 0.4rem;
+    width: 290px;
+    height: 48px;
+}

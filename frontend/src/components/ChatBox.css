@@ -1,0 +1,16 @@
+.chat-window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 92%;
+  max-height: 90vh;
+  text-align: left;
+}
+
+@media (min-width: 600px) {
+  .chat-window {
+    width: 550px;
+  }
+}
