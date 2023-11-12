@@ -83,12 +83,10 @@ from qdrant_client import QdrantClient
 def search_context(query, lang):
   query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
-  if lang == 'en' and kanton == 'all':
+  if lang == 'en':
     collections="swiss-or"
-  elif lang == 'de' and kanton == 'all':
+  elif lang == 'de':
     collections="swiss-de"
-  elif lang == 'de' and kanton == 'ag':
-    collections="swiss-test"
   hits = client.search(
           collection_name=collections,
           query_vector=query_vector,
