@@ -6,6 +6,7 @@ contractions==0.1.73
 cryptography
 Cython==0.29.23
 dl==0.1.0
+deepl
 docutils==0.17
 docutils==0.17
 filelock==3.0.12
@@ -28,9 +29,10 @@ python-dotenv==1.0.0
 qdrant_client==1.6.4
 railroad==0.5.0
 redis==5.0.1
-Sphinx==4.0.1
 torch==2.1.0
 tornado==6.1
 transformers==4.35.0
 urllib3_secure_extra==0.1.0
 watchdog
+flask_cors
+pymysql

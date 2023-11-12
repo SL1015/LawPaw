@@ -1,34 +1,18 @@
 from http.client import HTTPException
 import os
 from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
 from qdrant_client import QdrantClient
 import numpy as np
 import httpx
+from flask_cors import CORS
 
-
-db = SQLAlchemy()
 
 def create_app():
     # create and configure the app
     app = Flask(__name__)
-    DB_URI = 'mysql+pymysql://root:1phy187@localhost:3306/users'
-    app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
-    app.config['SECRET_KEY'] = 'dev'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # show executed SQL command
-    #app.config['SQLALCHEMY_ECHO'] = True
+    CORS(app)
+
     app.logger.info(httpx.__version__)
-    db.init_app(app)
-
-    # Import models here to register them with SQLAlchemy
-    from . import models
-
-    # Create the database tables for our data models
-    with app.app_context():
-        db.create_all()
-
 
     # query_vector = np.random.rand(384)
     # CollectionName = 'swiss-or'
@@ -42,9 +26,7 @@ def create_app():
     
 
     # Import and register blueprints
-    from .auth import auth_blueprint
     from .chatbot import chatbot_blueprint
-    app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(chatbot_blueprint)
 
 
