@@ -1,12 +1,10 @@
 .chat-input {
     margin: 0.5rem 0;
-    border-radius: 1rem;
-    border-width: 2px;
+    border-radius: 2rem;
+    border-width: 1px;
     border-style: solid;
-    border-color: #f3eeeaad;
-    background-color: #776b5d;
+    border-color: #012E40;
     padding: 0.7rem 1rem;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
   }
   
   .chat-input form textarea::-webkit-scrollbar {
@@ -62,15 +60,16 @@
   }
   
   .chat-input form button svg {
+    font-size: 1.3rem;
       filter: drop-shadow(1px 3px 1px rgb(0 0 0 / 0.7));
       transition: all ease-in-out 0.2s;
   }
   
-  .chat-input form button:hover svg{
+  /* .chat-input form button:hover svg{
       font-size: 2.1rem;
       color: beige;
       filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
-  }
+  } */
   
   .chat-input form button:active svg {
       font-size: 2rem;

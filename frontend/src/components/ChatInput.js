@@ -21,7 +21,7 @@ const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit }) => {
           rows="1"
           cols="50"
           name="input-msg"
-          placeholder="Send a message..."
+          placeholder="Ask your LawPaw..."
           value={message}
           onChange={onTextareaChange}
           onKeyDown={onEnterPress}

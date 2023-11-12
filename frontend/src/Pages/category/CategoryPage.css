@@ -1,23 +1,69 @@
 .cat-select-container {
-    height: 100%;
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.8rem;
+
 }
 
-.cat-select-container a button {
-    padding: 2rem;
+.cat-select-container button {
+    all: unset;
+    width: 128px;
+    height: 131px;
 }
 
-.back-button {
-    position: absolute;
-    bottom: 1rem;
-    right: 2rem;
+.cat-select-container button.active {
+    border-style: solid;
+    border-radius: 0.4rem;
+    border-width: 2px;
 }
 
-.back-button button {
-    padding: 1rem;
-    border-radius: 1rem;
+.cat-select-container button img {
+    width: 128px;
+    height: 131px;
+}
+
+.nav-bar-cat {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-bar-cat .continue-button {
+  margin: 0.5rem;
+  border-radius: 2rem;
+  width: 102px;
+  height: 48px;
+  border-width: 1px;
+  background-color: #012e40;
+  color: white;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.nav-bar-cat .back-button {
+  margin: 0.5rem;
+  border-radius: 2rem;
+  width: 102px;
+  height: 48px;
+  border-width: 0px;
+  background-color: transparent;
+  color: #B1B2B2;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.idk-button {
+ margin: 3rem auto 1rem;
+  border-radius: 2rem;
+  width: 250px;
+  height: 40px;
+  border-width: 1px;
+  background-color: white;
+  color: #012e40;
+  font-size: 16px;
+  letter-spacing: 1px;
 }
