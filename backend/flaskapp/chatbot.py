@@ -89,18 +89,21 @@ def search_context(query,lang,kanton):
   query_vector = query_to_vec(query, lang)
   client = QdrantClient(host="localhost", port=6333)
   if kanton == 'ag':
-    collections1 = 'ag_init'
+    collections1 = 'swiss-ag'
     hits1 = client.search(
-          collection_name=collections1,
-          query_vector=query_vector,
-          limit=5  # Return 5 closest points
-      )
-    hits2 = client.search(
           collection_name="swiss-de",
           query_vector=query_vector,
-          limit=5  # Return 5 closest points
+          limit=3  # Return 5 closest points
       )
-    hits = get_top_result(hits1,hits2)
+    try:
+      hits2 = client.search(
+          collection_name=collections1,
+          query_vector=query_vector,
+          limit=3  # Return 5 closest points
+        )
+      hits = get_top_result(hits1,hits2)
+    except:
+      return hits1
   else:
     if lang == 'en':
       collections="swiss-or"
@@ -109,7 +112,7 @@ def search_context(query,lang,kanton):
     hits = client.search(
           collection_name=collections,
           query_vector=query_vector,
-          limit=5  # Return 5 closest points
+          limit=3  # Return 5 closest points
       )
   return hits
 
@@ -191,9 +194,3 @@ def getResponse():
     response = qa_chatbot(user_message, lang, kanton)
     #current_app.logger.info(response)
     return response
-
-
-
-
-
-    
