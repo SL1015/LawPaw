@@ -22,7 +22,7 @@ const CategoryPageEN = () => {
   };
 
   const handleSkipClick = () => {
-      // navigate(`/en/${canton}/0`)
+      navigate(`/en/${canton}/0`);
   }
 
   const handleNavigateClick = () => {
@@ -58,7 +58,7 @@ const CategoryPageEN = () => {
       <section className="main-nav">
         <div className="progress-title">
           <h4>Step 3: Legal Path</h4>
-          <p onClick={handleSkipClick()}>Skip</p>
+          <p onClick={() => handleSkipClick()}>Skip</p>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-three"></div>
@@ -94,25 +94,25 @@ const CategoryPageEN = () => {
               className={`${selectedCat === "3" ? "active" : ""}`}
               onClick={() => handleCatClick("3")}
             >
-            <img src={Cat2} />
+            <img src={Cat3} />
             </button>
             <button
               className={`${selectedCat === "4" ? "active" : ""}`}
               onClick={() => handleCatClick("4")}
             >
-            <img src={Cat3} />
+            <img src={Cat4} />
             </button>
             <button
               className={`${selectedCat === "5" ? "active" : ""}`}
               onClick={() => handleCatClick("5")}
             >
-            <img src={Cat4} />
+            <img src={Cat5} />
             </button>
             <button
               className={`${selectedCat === "6" ? "active" : ""}`}
               onClick={() => handleCatClick("6")}
             >
-            <img src={Cat5} />
+            <img src={Cat6} />
             </button>
           </div>
         </div>

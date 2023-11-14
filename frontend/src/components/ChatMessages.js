@@ -1,6 +1,5 @@
 import React from "react";
 import LoadingSpinner from "./LoadingSpinner";
-import { IconName } from "react-icons/fa";
 import "./ChatMessages.css";
 import botIcon from "./Images/bot.png"
 import clientIcon from "./Images/client.png"
@@ -12,10 +11,10 @@ const ChatMessages = ({ clientInput, aiBotResponse, isLoading, formSubmitted }) 
           <>
             <div className="client-inputmsg">
               <p>{clientInput}</p>
-              <img src={clientIcon}/>
+              <img src={clientIcon} alt="Client icon"/>
             </div>
             <div className="bot-response">
-              <img src={botIcon}/>
+              <img src={botIcon} alt="AI icon"/>
               <p>{isLoading ? <LoadingSpinner /> : aiBotResponse}</p>
             </div>
           </>
