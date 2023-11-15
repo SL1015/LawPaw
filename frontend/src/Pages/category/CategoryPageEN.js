@@ -18,7 +18,12 @@ const CategoryPageEN = () => {
   const [selectedCat, setSelectedCat] = useState("1");
 
   const handleCatClick = (cat) => {
+    if (cat === "0") {
+      setSelectedCat(cat)
+      handleSkipClick();
+    }
     setSelectedCat(cat);
+
   };
 
   const handleSkipClick = () => {
@@ -26,7 +31,7 @@ const CategoryPageEN = () => {
   }
 
   const handleNavigateClick = () => {
-    navigate(`/en/${canton}/${selectedCat}`);
+    navigate(`/${language}/${canton}/${selectedCat}`);
   };
 
   const handleBackClick = () => {
@@ -58,7 +63,7 @@ const CategoryPageEN = () => {
       <section className="main-nav">
         <div className="progress-title">
           <h4>Step 3: Legal Path</h4>
-          <p onClick={() => handleSkipClick()}>Skip</p>
+          <p onClick={() => handleCatClick("0")}>Skip</p>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-three"></div>
@@ -116,7 +121,7 @@ const CategoryPageEN = () => {
             </button>
           </div>
         </div>
-        <button className="idk-button" onClick={() => handleSkipClick()} >I don’t know</button>
+        <button className="idk-button" onClick={() => handleCatClick("0")} >I don’t know</button>
         <div className="nav-bar-cat">
           <button className="back-button" onClick={() => handleBackClick()} >
             Back

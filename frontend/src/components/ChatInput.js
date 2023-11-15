@@ -1,15 +1,20 @@
 import React, { useRef } from "react";
-import { AiOutlineSend } from "react-icons/ai";
 import "./ChatInput.css";
 
-const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit }) => {
+const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit, Language }) => {
   const myFormRef = useRef(null);
-
   const onEnterPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       myFormRef.current.requestSubmit();
     }
+  };
+
+  const placeholders = {
+    en: "Ask your LawPaw...",
+    de: "Fragen sie ihren LawPaw...",
+    fr: "Demandez à votre LawPaw..."
+    
   };
 
   return (
@@ -21,7 +26,7 @@ const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit }) => {
           rows="1"
           cols="50"
           name="input-msg"
-          placeholder="Ask your LawPaw..."
+          placeholder={placeholders[Language]}
           value={message}
           onChange={onTextareaChange}
           onKeyDown={onEnterPress}

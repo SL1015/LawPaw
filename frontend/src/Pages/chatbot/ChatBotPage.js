@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
-import { useChat } from "ai/react";
 import { useParams, Link } from "react-router-dom";
-import { sendMessageToAPI } from "../../api/chat/api";
-import ChatBox from "../../components/ChatBox";
+// import ChatBox from "../../components/ChatBox";
+import ChatBox from "../../components/ChatBoxTest";
 import { FaArrowLeft } from "react-icons/fa";
 import "./ChatBotPage.css";
 
 export default function ChatBotPage() {
+  const { language, canton, category } = useParams();
+  // console.log(`Lang: ${language}, Canton: ${canton}, Cat:   ${category} `)
   return (
     <>
       <section className="botpage-nav">
@@ -20,7 +21,7 @@ export default function ChatBotPage() {
         <br></br>
       </section>
       <section className="chatbox-section">
-        <ChatBox />
+        <ChatBox Language={language} Canton={canton} Category={category} />
       </section>
     </>
   );
