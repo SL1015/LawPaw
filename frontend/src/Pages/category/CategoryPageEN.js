@@ -1,6 +1,5 @@
-// import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./CategoryPage.css";
 import Cat1 from "../../components/Images/Card-0.png";

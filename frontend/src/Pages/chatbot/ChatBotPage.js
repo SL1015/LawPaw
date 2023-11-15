@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useParams, Link } from "react-router-dom";
-// import ChatBox from "../../components/ChatBox";
-import ChatBox from "../../components/ChatBoxTest";
+import ChatBox from "../../components/ChatBox";
+// import ChatBox from "../../components/ChatBoxTest";
 import { FaArrowLeft } from "react-icons/fa";
 import "./ChatBotPage.css";
 

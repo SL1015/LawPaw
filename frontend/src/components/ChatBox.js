@@ -5,7 +5,7 @@ import { sendMessageToAPI } from "../api//chat/api";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
 
-const ChatBox = () => {
+const ChatBox = ({Language, Canton, Category}) => {
   const [message, setMessage] = useState("");
   const [textareaHeight, setTextareaHeight] = useState("auto");
   const [aiBotResponse, setAiBotResponse] = useState("");
@@ -22,6 +22,7 @@ const ChatBox = () => {
     setMessage("");
     setTextareaHeight("auto");
     setFormSubmitted(true);
+    console.log(`Lang: ${Language}, Canton: ${Canton}, Cat: ${Category} `);
   };
 
   const handleTextareaChange = (event) => {
@@ -44,7 +45,7 @@ const ChatBox = () => {
 
         try {
           
-          const response = await sendMessageToAPI(clientInput, "en");
+          const response = await sendMessageToAPI(clientInput, Language, Canton, Category);
           
           
           if (typeof response === "string") {
@@ -78,6 +79,7 @@ const ChatBox = () => {
           textareaHeight={textareaHeight}
           onTextareaChange={handleTextareaChange}
           onSubmit={handleSubmit}
+          Language={Language}
         />
       </section>
     </>
