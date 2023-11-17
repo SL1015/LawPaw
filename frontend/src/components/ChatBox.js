@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ChatBox.css";
 // import callBotApi from "../api/chat/APIbot";
-import { sendMessageToAPI } from "../api//chat/api";
+import { sendMessageToAPI } from "../api/chat/api";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
 

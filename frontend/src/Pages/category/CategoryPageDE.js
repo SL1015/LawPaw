@@ -69,7 +69,7 @@ const CategoryPageEN = () => {
           <div className="title-container">
             <h1>
               Choose Your <br />
-              Legal Path - GERMAN
+              Legal Path
             </h1>
             <p>
               Choose your law category and open the door to personalized

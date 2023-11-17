@@ -1,6 +1,6 @@
 .intro-section {
   background-image: url("../../components/Images/Location.png");
-  background-size: fill;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;

@@ -56,7 +56,7 @@ const HomePage = () => {
               onClick={() => handleLanguageClick("fr")}
             >
             <img src={FRlogo}></img>
-              <span>Bonjour</span>
+              <span>Salut</span>
             </button>
           </div>
         </div>
