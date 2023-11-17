@@ -12,7 +12,7 @@ export default function ChatBotPage() {
     <>
       <section className="botpage-nav">
         <div className="progress-title">
-          <Link to ="/homepage"><span><FaArrowLeft /></span></Link>
+          <Link to ={`/${language}/${canton}`}><span><FaArrowLeft /></span></Link>
           <h4>LawPaw</h4>
         </div>
         <div className="progress-bar-container">

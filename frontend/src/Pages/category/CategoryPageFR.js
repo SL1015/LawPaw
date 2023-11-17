@@ -29,7 +29,7 @@ const CategoryPageEN = () => {
   };
 
   const handleBackClick = () => {
-    navigate("/homepage");
+    navigate(`/${language}`);
   };
   
 
