@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import GBlogo from "../../components/Images/GB.png"
+import CHlogo from "../../components/Images/CH.png"
+import FRlogo from "../../components/Images/FR.png"
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -10,15 +13,15 @@ const HomePage = () => {
     setSelectedLanguage(language);
   };
 
-  const handleNavigateClick = (canton) => {
-    navigate(`/${selectedLanguage}/${canton}`);
+  const handleNavigateClick = () => {
+    navigate(`/${selectedLanguage}`);
   };
 
   return (
     <>
       <section className="main-nav">
         <div className="progress-title">
-          <h3>Step 1: Language</h3>
+          <h4>Step 1: Legal Lingo</h4>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-one"></div>
@@ -28,10 +31,9 @@ const HomePage = () => {
       <section className="main-section">
         <div className="options-container">
           <div className="title-container">
-            <h1>Select your language</h1>
+            <h1>Choose Your <br />Legal Lingo</h1>
             <p>
-              This will help us give you the most precise law guidance based on
-              your canton.
+            Pick your language for comfy law guidance.
             </p>
           </div>
           <div className="lang-select-container">
@@ -39,18 +41,21 @@ const HomePage = () => {
               className={`lang-en ${selectedLanguage === "en" ? "active" : ""}`}
               onClick={() => handleLanguageClick("en")}
             >
+              <img src={GBlogo}></img>
               <span>Hello</span>
             </button>
             <button
               className={`lang-de ${selectedLanguage === "de" ? "active" : ""}`}
               onClick={() => handleLanguageClick("de")}
             >
-              <span>Hallo</span>
+            <img src={CHlogo}></img>
+              <span>Grüezi</span>
             </button>
             <button
               className={`lang-fr ${selectedLanguage === "fr" ? "active" : ""}`}
               onClick={() => handleLanguageClick("fr")}
             >
+            <img src={FRlogo}></img>
               <span>Bonjour</span>
             </button>
           </div>
@@ -67,7 +72,7 @@ const HomePage = () => {
           </button>
         </div> */}
         <nav className="navigation-bar">
-          <button className="homepage-button">Continue</button>
+          <button className="homepage-button" onClick={() => handleNavigateClick({selectedLanguage})}>Continue</button>
         </nav>
       </section>
     </>

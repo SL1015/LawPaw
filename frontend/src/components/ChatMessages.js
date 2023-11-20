@@ -1,7 +1,9 @@
 import React from "react";
 import LoadingSpinner from "./LoadingSpinner";
-import { AiFillRobot, AiFillMeh } from "react-icons/ai";
+import { IconName } from "react-icons/fa";
 import "./ChatMessages.css";
+import botIcon from "./Images/bot.png"
+import clientIcon from "./Images/client.png"
 
 const ChatMessages = ({ clientInput, aiBotResponse, isLoading, formSubmitted }) => {
     return (
@@ -9,11 +11,11 @@ const ChatMessages = ({ clientInput, aiBotResponse, isLoading, formSubmitted }) 
         {formSubmitted && (
           <>
             <div className="client-inputmsg">
-              <strong><AiFillMeh /></strong>
               <p>{clientInput}</p>
+              <img src={clientIcon}/>
             </div>
             <div className="bot-response">
-              <strong><AiFillRobot /></strong>
+              <img src={botIcon}/>
               <p>{isLoading ? <LoadingSpinner /> : aiBotResponse}</p>
             </div>
           </>

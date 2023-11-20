@@ -22,4 +22,28 @@
     margin: 1rem;
 }
 
+.botpage-nav .progress-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+    
+  .botpage-nav .progress-title h4 {
+    margin: 2rem 1rem 1rem;
+    color: #012E40;
+  
+  }
 
+  .botpage-nav .progress-title span {
+    position: absolute;
+    left: 1rem;
+    top: 2.2rem;
+    color: #012E40;
+  }
+
+  .chatbox-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
