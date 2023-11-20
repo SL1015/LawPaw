@@ -3,11 +3,12 @@
 }
 
 .main-nav {
+  height: 11vh;
   display: flex;
   /* padding: 48px 24px 12px 24px; */
-  justify-content: space-between;
   align-self: stretch;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .main-nav .progress-title {
@@ -24,7 +25,6 @@
 .main-nav .progress-title h4 {
   margin: 2rem 1rem 1rem;
   color: #012E40;
-
 }
 
 .progress-bar-container {

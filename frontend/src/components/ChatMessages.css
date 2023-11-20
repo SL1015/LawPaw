@@ -43,7 +43,7 @@
 
 .client-inputmsg {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   padding: 0 0.3rem;
   margin: 0.5rem 0;
@@ -72,7 +72,7 @@
 
 .bot-response {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   padding: 0 0.3rem;
   margin: 0.5rem 0;

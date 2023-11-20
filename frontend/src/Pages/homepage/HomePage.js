@@ -11,17 +11,44 @@ const HomePage = () => {
 
   const handleLanguageClick = (language) => {
     setSelectedLanguage(language);
+    console.log(selectedLanguage);
   };
 
   const handleNavigateClick = () => {
     navigate(`/${selectedLanguage}`);
   };
 
+  const navTitle = {
+    en: "Step 1: Legal Lingo",
+    de: "Schritt 1: Sprache",
+    fr: "Étape 1 : Langue" 
+  }; 
+  const pagTitleOne = {
+    en: "Choose Your",
+    de: "Wählen Sie ",
+    fr: "Choisissez" 
+  }; 
+  const pagTitleTwo = {
+    en: "Legal Lingo",
+    de: "Ihr Sprache",
+    fr: "Votre Langue" 
+  }; 
+  const subtitle = {
+    en: "Pick your language for comfy law guidance.",
+    de: "Wähle Sprache für rechtliche Beratung.",
+    fr: "Choisissez langue pour conseils juridiques." 
+  }
+  const buttonText = {
+    en: "Continue",
+    de: "Weiter",
+    fr: "Poursuivre"
+  }
+
   return (
     <>
       <section className="main-nav">
         <div className="progress-title">
-          <h4>Step 1: Legal Lingo</h4>
+          <h4>{navTitle[selectedLanguage]}</h4>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-one"></div>
@@ -31,9 +58,9 @@ const HomePage = () => {
       <section className="main-section">
         <div className="options-container">
           <div className="title-container">
-            <h1>Choose Your <br />Legal Lingo</h1>
+            <h1>{pagTitleOne[selectedLanguage]}<br />{pagTitleTwo[selectedLanguage]}</h1>
             <p>
-            Pick your language for comfy law guidance.
+            {subtitle[selectedLanguage]}
             </p>
           </div>
           <div className="lang-select-container">
@@ -41,38 +68,27 @@ const HomePage = () => {
               className={`lang-en ${selectedLanguage === "en" ? "active" : ""}`}
               onClick={() => handleLanguageClick("en")}
             >
-              <img src={GBlogo}></img>
+              <img src={GBlogo} alt="English Flag"></img>
               <span>Hello</span>
             </button>
             <button
               className={`lang-de ${selectedLanguage === "de" ? "active" : ""}`}
               onClick={() => handleLanguageClick("de")}
             >
-            <img src={CHlogo}></img>
+            <img src={CHlogo} alt="Switzerland Flag"></img>
               <span>Grüezi</span>
             </button>
             <button
               className={`lang-fr ${selectedLanguage === "fr" ? "active" : ""}`}
               onClick={() => handleLanguageClick("fr")}
             >
-            <img src={FRlogo}></img>
+            <img src={FRlogo} alt="French Flag"></img>
               <span>Salut</span>
             </button>
           </div>
         </div>
-        {/* <div className="canton-select-container">
-          <button className="canton-VD" onClick={() => handleNavigateClick("VD")}>
-            <h2>VD</h2>
-          </button>
-          <button className="canton-zH" onClick={() => handleNavigateClick("ZH")}>
-            <h2>ZH</h2>
-          </button>
-          <button className="canton-BE" onClick={() => handleNavigateClick("BE")}>
-            <h2>BE</h2>
-          </button>
-        </div> */}
         <nav className="navigation-bar">
-          <button className="homepage-button" onClick={() => handleNavigateClick({selectedLanguage})}>Continue</button>
+          <button className="homepage-button" onClick={() => handleNavigateClick({selectedLanguage})}>{buttonText[selectedLanguage]}</button>
         </nav>
       </section>
     </>
