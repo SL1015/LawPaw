@@ -101,7 +101,7 @@ def search_context(query,lang,kanton):
           query_vector=query_vector,
           limit=3  # Return 5 closest points
         )
-      hits = get_top_result(hits1,hits2)
+      hits = get_top_results(hits1,hits2)
     except:
       return hits1
   else:
@@ -190,7 +190,5 @@ def getResponse():
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
-    #response = ollama(user_message)
     response = qa_chatbot(user_message, lang, kanton)
-    #current_app.logger.info(response)
     return response
