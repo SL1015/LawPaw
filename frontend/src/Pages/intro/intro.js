@@ -6,7 +6,7 @@ const Intro = () => {
   return (
     <>
       <section className="intro-section">
-        <img src={LawPawLogo}></img>
+        <img src={LawPawLogo} alt="LawPaw Logo"></img>
         <h1>LawPaw</h1>
         <h3>
           Hi there! I'm LawPaw, <br />

@@ -18,7 +18,6 @@ export default function ChatBotPage() {
         <div className="progress-bar-container">
           <div className="progress-bar-full"></div>
         </div>
-        <br></br>
       </section>
       <section className="chatbox-section">
         <ChatBox Language={language} Canton={canton} Category={category} />

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./ChatBox.css";
-// import callBotApi from "../api/chat/APIbot";
 import { sendMessageToAPI } from "../api/chat/api";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
 
-const ChatBox = ({Language, Canton, Category}) => {
+const ChatBox = ({ Language, Canton, Category }) => {
   const [message, setMessage] = useState("");
   const [textareaHeight, setTextareaHeight] = useState("auto");
   const [aiBotResponse, setAiBotResponse] = useState("");
@@ -44,19 +43,28 @@ const ChatBox = ({Language, Canton, Category}) => {
         setIsLoading(true);
 
         try {
-          
-          const response = await sendMessageToAPI(clientInput, Language, Canton, Category);
-          
-          
+          const response = await sendMessageToAPI(
+            clientInput,
+            Language,
+            Canton,
+            Category
+          );
+
           if (typeof response === "string") {
-            setAiBotResponse(response);
+            let currentResponse = "";
+            setIsLoading(false);
+            for (let i = 0; i < response.length; i++) {
+              currentResponse += response.charAt(i);
+              setAiBotResponse(currentResponse);
+              await new Promise((resolve) => setTimeout(resolve, 15));
+            }
+            setAiBotResponse(currentResponse);
           }
 
           setIsLoading(false);
         } catch (error) {
           console.error("Error calling sendMessageToAPI:", error);
         } finally {
-          
           setFormSubmitted(true);
         }
       }

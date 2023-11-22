@@ -67,7 +67,6 @@ const CategoryPageEN = () => {
         <div className="progress-bar-container">
           <div className="progress-bar-three"></div>
         </div>
-        <br></br>
       </section>
       <section className="main-section">
         <div className="options-container">

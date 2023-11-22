@@ -1,34 +1,52 @@
 .cat-select-container {
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.8rem;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 
+.cat-select-container::-webkit-scrollbar {
+  display: none;
 }
 
 .cat-select-container button {
-    all: unset;
-    width: 128px;
-    height: 131px;
+  all: unset;
+  width: 128px;
+  height: 131px;
 }
 
 .cat-select-container button.active {
-    border-style: solid;
-    border-radius: 0.4rem;
-    border-width: 2px;
+  border-style: solid;
+  border-radius: 0.4rem;
+  border-width: 2px;
 }
 
 .cat-select-container button img {
-    width: 128px;
-    height: 131px;
+  width: 128px;
+  height: 131px;
 }
 
 .nav-bar-cat {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 390px) {
+  .nav-bar-cat {
+    width: 380px;
+  }
+}
+
+@media (min-height: 650px) {
+  .cat-select-container {
+    /* height: 45vh; */
+  }
 }
 
 .nav-bar-cat .continue-button {
@@ -50,14 +68,14 @@
   height: 48px;
   border-width: 0px;
   background-color: transparent;
-  color: #B1B2B2;
+  color: #b1b2b2;
   font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
 }
 
 .idk-button {
- margin: 3rem auto 1rem;
+  margin-top: 0.3rem;
   border-radius: 2rem;
   width: 250px;
   height: 40px;

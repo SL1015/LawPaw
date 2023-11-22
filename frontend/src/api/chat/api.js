@@ -1,4 +1,3 @@
-// api.js
 import axios from "axios";
 export const sendMessageToAPI = async (message, language, canton, category) => {
   try {

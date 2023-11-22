@@ -3,8 +3,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +14,7 @@
 .intro-section img {
   margin-top: 3rem;
   width: 70%;
+  max-width: 300px;
 }
 
 .intro-section h1 {

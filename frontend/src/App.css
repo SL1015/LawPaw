@@ -1,14 +1,13 @@
-.App {
-  text-align: center;
+#root {
+  /* max-width: 400px; */
 }
 
 .main-nav {
-  height: 11vh;
   display: flex;
-  /* padding: 48px 24px 12px 24px; */
   align-self: stretch;
   flex-direction: column;
   justify-content: space-between;
+  height: 11vh;
 }
 
 .main-nav .progress-title {

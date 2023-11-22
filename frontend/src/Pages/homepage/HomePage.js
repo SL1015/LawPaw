@@ -53,7 +53,6 @@ const HomePage = () => {
         <div className="progress-bar-container">
           <div className="progress-bar-one"></div>
         </div>
-        <br></br>
       </section>
       <section className="main-section">
         <div className="options-container">
