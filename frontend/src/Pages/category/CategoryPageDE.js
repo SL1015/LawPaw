@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./CategoryPage.css";
 import Cat1 from "../../components/Images/Card-0.png";
@@ -8,6 +8,7 @@ import Cat3 from "../../components/Images/Card-2.png";
 import Cat4 from "../../components/Images/Card-3.png";
 import Cat5 from "../../components/Images/Card-4.png";
 import Cat6 from "../../components/Images/Card-5.png";
+import FlipAlert from "../../components/FlipAlert";
 
 const CategoryPageEN = () => {
   const { language, canton } = useParams();
@@ -21,8 +22,8 @@ const CategoryPageEN = () => {
   };
 
   const handleSkipClick = () => {
-      // navigate(`/en/${canton}/0`)
-  }
+    // navigate(`/en/${canton}/0`)
+  };
 
   const handleNavigateClick = () => {
     navigate(`/${language}/${canton}/${selectedCat}`);
@@ -31,32 +32,13 @@ const CategoryPageEN = () => {
   const handleBackClick = () => {
     navigate(`/${language}`);
   };
-  
-
 
   return (
     <>
-      {/* <section className="header">
-        <h1>English LawPaw CategoryPage</h1>
-      </section>
-      <section className="main-section">
-        <div className="cat-select-container">
-          <Link to="/en/category/1"><button className=""><h2>Cat 1</h2></button></Link>
-          <Link to="/en/category/2"><button className=""><h2>Cat 2</h2></button></Link>
-          <Link to="/en/category/3"><button className=""><h2>Cat 3</h2></button></Link>
-          <Link to="/en/category/4"><button className=""><h2>Cat 4</h2></button></Link>
-          <Link to="/en/category/5"><button className=""><h2>Cat 5</h2></button></Link>
-          <Link to="/en/category/6"><button className=""><h2>Cat 6</h2></button></Link>
-          <Link to="/en/category/7"><button className=""><h2>Cat 7</h2></button></Link>
-          <Link to="/en/category/8"><button className=""><h2>Cat 8</h2></button></Link>
-        </div>
-      </section>
-      <div className="back-button"><Link to="/"><button>Back</button></Link></div>
-     */}
-
+    <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
-          <h4>Step 3: Legal Path - German</h4>
+          <h4>Schritt 3: Rechtlicher Weg</h4>
           <p onClick={handleSkipClick()}>Skip</p>
         </div>
         <div className="progress-bar-container">
@@ -67,12 +49,12 @@ const CategoryPageEN = () => {
         <div className="options-container">
           <div className="title-container">
             <h1>
-              Choose Your <br />
-              Legal Path
+              Wählen Sie Ihren <br />
+              Rechtlichen Weg
             </h1>
             <p>
-              Choose your law category and open the door to personalized
-              guidance, made just for you.
+              Wählen Sie Ihre Rechtskategorie und öffnen Sie die Tür zu einer
+              persönlichen Beratung, die nur für Sie bestimmt ist.
             </p>
           </div>
           <div className="cat-select-container">
@@ -86,37 +68,39 @@ const CategoryPageEN = () => {
               className={`${selectedCat === "2" ? "active" : ""}`}
               onClick={() => handleCatClick("2")}
             >
-            <img src={Cat2} />
+              <img src={Cat2} />
             </button>
             <button
               className={`${selectedCat === "3" ? "active" : ""}`}
               onClick={() => handleCatClick("3")}
             >
-            <img src={Cat3} />
+              <img src={Cat3} />
             </button>
             <button
               className={`${selectedCat === "4" ? "active" : ""}`}
               onClick={() => handleCatClick("4")}
             >
-            <img src={Cat4} />
+              <img src={Cat4} />
             </button>
             <button
               className={`${selectedCat === "5" ? "active" : ""}`}
               onClick={() => handleCatClick("5")}
             >
-            <img src={Cat5} />
+              <img src={Cat5} />
             </button>
             <button
               className={`${selectedCat === "6" ? "active" : ""}`}
               onClick={() => handleCatClick("6")}
             >
-            <img src={Cat6} />
+              <img src={Cat6} />
             </button>
           </div>
         </div>
-        <button className="idk-button" onClick={() => handleSkipClick()} >I don’t know</button>
+        <button className="idk-button" onClick={() => handleSkipClick()}>
+          I don’t know
+        </button>
         <div className="nav-bar-cat">
-          <button className="back-button" onClick={() => handleBackClick()} >
+          <button className="back-button" onClick={() => handleBackClick()}>
             Back
           </button>
           <button

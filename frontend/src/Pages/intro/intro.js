@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "./intro.css";
 import LawPawLogo from "../../components/Images/LawPaw.png"
+import FlipAlert from "../../components/FlipAlert";
 
 const Intro = () => {
   return (
     <>
+    <FlipAlert />
       <section className="intro-section">
         <img src={LawPawLogo} alt="LawPaw Logo"></img>
         <h1>LawPaw</h1>

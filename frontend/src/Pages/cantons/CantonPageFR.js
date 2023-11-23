@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./CantonPage.css";
+import FlipAlert from "../../components/FlipAlert";
 
 const HomePage = () => {
     const { language } = useParams();
@@ -22,6 +23,7 @@ const handleBackClick = () => {
 
 return (
     <>
+    <FlipAlert />
     <section className="main-nav">
         <div className="progress-title">
         <h4>Étape 2 : Canton</h4>

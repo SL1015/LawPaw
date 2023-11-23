@@ -4,6 +4,7 @@ import "./HomePage.css";
 import GBlogo from "../../components/Images/GB.png"
 import CHlogo from "../../components/Images/CH.png"
 import FRlogo from "../../components/Images/FR.png"
+import FlipAlert from "../../components/FlipAlert";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const HomePage = () => {
 
   return (
     <>
+    <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
           <h4>{navTitle[selectedLanguage]}</h4>
