@@ -71,7 +71,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
     };
 
     fetchData();
-  }, [clientInput]);
+  }, [clientInput, Canton, Category, Language]);
 
   return (
     <>

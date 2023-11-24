@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./CategoryPage.css";
-import Cat1 from "../../components/Images/Card-0.png";
-import Cat2 from "../../components/Images/Card-1.png";
-import Cat3 from "../../components/Images/Card-2.png";
-import Cat4 from "../../components/Images/Card-3.png";
-import Cat5 from "../../components/Images/Card-4.png";
-import Cat6 from "../../components/Images/Card-5.png";
+import Cat1 from "../../components/Images/icons/cat1.svg";
+import Cat2 from "../../components/Images/icons/cat2.svg";
+import Cat3 from "../../components/Images/icons/cat3.svg";
+import Cat4 from "../../components/Images/icons/cat4.svg";
+import Cat5 from "../../components/Images/icons/cat5.svg";
+import Cat6 from "../../components/Images/icons/cat6.svg";
 import FlipAlert from "../../components/FlipAlert";
 
 const CategoryPageEN = () => {
@@ -19,16 +19,15 @@ const CategoryPageEN = () => {
 
   const handleCatClick = (cat) => {
     if (cat === "0") {
-      setSelectedCat(cat)
+      setSelectedCat(cat);
       handleSkipClick();
     }
     setSelectedCat(cat);
-
   };
 
   const handleSkipClick = () => {
-      navigate(`/en/${canton}/0`);
-  }
+    navigate(`/en/${canton}/0`);
+  };
 
   const handleNavigateClick = () => {
     navigate(`/${language}/${canton}/${selectedCat}`);
@@ -37,12 +36,10 @@ const CategoryPageEN = () => {
   const handleBackClick = () => {
     navigate(`/${language}`);
   };
-  
-
 
   return (
     <>
-    <FlipAlert />
+      <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
           <h4>Step 3: Legal Path</h4>
@@ -66,53 +63,91 @@ const CategoryPageEN = () => {
           </div>
           <div className="cat-select-container">
             <button
-              className={`${selectedCat === "1" ? "active" : ""}`}
+              className={`cat-button cat-one ${
+                selectedCat === "1" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("1")}
             >
-              <img src={Cat1} />
+              <img src={Cat1} alt="Contract icon" />
+              <div className="info-container">
+                <h4>Contract</h4>
+                <p>Your buddy for understanding contracts and agreements.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "2" ? "active" : ""}`}
+              className={`cat-button cat-two ${
+                selectedCat === "2" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("2")}
             >
-            <img src={Cat2} />
+              <img src={Cat2} alt="Employment icon" />
+              <div className="info-container">
+                <h4>Employment</h4>
+                <p>Guiding you through the world of employment and its regulations.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "3" ? "active" : ""}`}
+              className={`cat-button cat-three ${
+                selectedCat === "3" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("3")}
             >
-            <img src={Cat3} />
+              <img src={Cat3} alt="Rental icon" />
+              <div className="info-container">
+                <h4>Rental</h4>
+                <p>A buddy to guide you through any rental problems and explain the rules.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "4" ? "active" : ""}`}
+              className={`cat-button cat-four ${
+                selectedCat === "4" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("4")}
             >
-            <img src={Cat4} />
+              <img src={Cat4} alt="Family icon" />
+              <div className="info-container">
+                <h4>Family</h4>
+                <p>Helping you navigate through marriage, divorce, and child custody.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "5" ? "active" : ""}`}
+              className={`cat-button cat-five ${
+                selectedCat === "5" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("5")}
             >
-            <img src={Cat5} />
+              <img src={Cat5} alt="Inheritance Icon" />
+              <div className="info-container">
+                <h4>Inheritance</h4>
+                <p>Your ally in matters of inheritance and succession.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "6" ? "active" : ""}`}
+              className={`cat-button cat-six ${
+                selectedCat === "6" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("6")}
             >
-            <img src={Cat6} />
+              <img src={Cat6} alt="Tort icon" />
+              <div className="info-container">
+                <h4>Tort law</h4>
+                <p>Friendly advice on civil wrongs, injuries, and remedies.</p>
+              </div>
             </button>
           </div>
         </div>
-        <button className="idk-button" onClick={() => handleCatClick("0")} >I don’t know</button>
+        <button className="idk-button" onClick={() => handleCatClick("0")}>
+          I don’t know
+        </button>
         <div className="nav-bar-cat">
-          <button className="back-button" onClick={() => handleBackClick()} >
+          <button className="back-button" onClick={() => handleBackClick()}>
             Back
           </button>
           <button
             className="continue-button"
             onClick={() => handleNavigateClick(selectedCat)}
           >
-            Continue
+            Start Chat
           </button>
         </div>
       </section>

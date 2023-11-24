@@ -7,7 +7,7 @@ import FlipAlert from "../../components/FlipAlert";
 const HomePage = () => {
     const { language } = useParams();
 const navigate = useNavigate();
-const [selectedCanton, setSelectedCanton] = useState("AG");
+const [selectedCanton, setSelectedCanton] = useState("ALL");
 
 const handleCantonClick = (canton) => {
     setSelectedCanton(canton);

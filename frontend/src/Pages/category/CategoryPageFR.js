@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./CategoryPage.css";
-import Cat1 from "../../components/Images/Card-0.png";
-import Cat2 from "../../components/Images/Card-1.png";
-import Cat3 from "../../components/Images/Card-2.png";
-import Cat4 from "../../components/Images/Card-3.png";
-import Cat5 from "../../components/Images/Card-4.png";
-import Cat6 from "../../components/Images/Card-5.png";
+import Cat1 from "../../components/Images/icons/cat1.svg";
+import Cat2 from "../../components/Images/icons/cat2.svg";
+import Cat3 from "../../components/Images/icons/cat3.svg";
+import Cat4 from "../../components/Images/icons/cat4.svg";
+import Cat5 from "../../components/Images/icons/cat5.svg";
+import Cat6 from "../../components/Images/icons/cat6.svg";
 import FlipAlert from "../../components/FlipAlert";
 
 const CategoryPageEN = () => {
@@ -22,8 +22,8 @@ const CategoryPageEN = () => {
   };
 
   const handleSkipClick = () => {
-      // navigate(`/en/${canton}/0`)
-  }
+    // navigate(`/en/${canton}/0`)
+  };
 
   const handleNavigateClick = () => {
     navigate(`/${language}/${canton}/${selectedCat}`);
@@ -32,15 +32,13 @@ const CategoryPageEN = () => {
   const handleBackClick = () => {
     navigate(`/${language}`);
   };
-  
-
 
   return (
     <>
-    <FlipAlert />
+      <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
-          <h4>Step 3: Legal Path - French</h4>
+          <h4>Étape 3 : Voie Juridique</h4>
           <p onClick={handleSkipClick()}>Skip</p>
         </div>
         <div className="progress-bar-container">
@@ -51,63 +49,101 @@ const CategoryPageEN = () => {
         <div className="options-container">
           <div className="title-container">
             <h1>
-              Choose Your <br />
-              Legal Path
+              Choisissez Votre <br />
+              Voie Juridique
             </h1>
             <p>
-              Choose your law category and open the door to personalized
-              guidance, made just for you.
+              Choisissez votre catégorie de droit et ouvrez la porte à des
+              conseils personnalisés. personnalisés, faits pour vous.
             </p>
           </div>
           <div className="cat-select-container">
-            <button
-              className={`${selectedCat === "1" ? "active" : ""}`}
+          <button
+              className={`cat-button cat-one ${
+                selectedCat === "1" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("1")}
             >
-              <img src={Cat1} />
+              <img src={Cat1} alt="Contract icon" />
+              <div className="info-container">
+                <h4>Contrat</h4>
+                <p>Votre ami pour comprendre les contrats et les accords.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "2" ? "active" : ""}`}
+              className={`cat-button cat-two ${
+                selectedCat === "2" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("2")}
             >
-            <img src={Cat2} />
+              <img src={Cat2} alt="Employment icon" />
+              <div className="info-container">
+                <h4>Emploi</h4>
+                <p>Vous guider dans le monde de l'emploi et de sa réglementation.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "3" ? "active" : ""}`}
+              className={`cat-button cat-three ${
+                selectedCat === "3" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("3")}
             >
-            <img src={Cat3} />
+              <img src={Cat3} alt="Rental icon" />
+              <div className="info-container">
+                <h4>Location</h4>
+                <p>Un copain qui vous guidera en cas de problème de location et vous expliquera les règles.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "4" ? "active" : ""}`}
+              className={`cat-button cat-four ${
+                selectedCat === "4" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("4")}
             >
-            <img src={Cat4} />
+              <img src={Cat4} alt="Family icon" />
+              <div className="info-container">
+                <h4>Famille</h4>
+                <p>Vous aider à naviguer à travers le mariage, le divorce et la garde des enfants.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "5" ? "active" : ""}`}
+              className={`cat-button cat-five ${
+                selectedCat === "5" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("5")}
             >
-            <img src={Cat5} />
+              <img src={Cat5} alt="Inheritance Icon" />
+              <div className="info-container">
+                <h4>Héritage</h4>
+                <p>Votre allié en matière d'héritage et de succession.</p>
+              </div>
             </button>
             <button
-              className={`${selectedCat === "6" ? "active" : ""}`}
+              className={`cat-button cat-six ${
+                selectedCat === "6" ? "active" : ""
+              }`}
               onClick={() => handleCatClick("6")}
             >
-            <img src={Cat6} />
+              <img src={Cat6} alt="Tort icon" />
+              <div className="info-container">
+                <h4>Resp. Civile</h4>
+                <p>Conseils amicaux sur les préjudices civils, les blessures et les recours.</p>
+              </div>
             </button>
           </div>
         </div>
-        <button className="idk-button" onClick={() => handleSkipClick()} >I don’t know</button>
+        <button className="idk-button" onClick={() => handleSkipClick()}>
+          Je ne sais pas
+        </button>
         <div className="nav-bar-cat">
-          <button className="back-button" onClick={() => handleBackClick()} >
-            Back
+          <button className="back-button" onClick={() => handleBackClick()}>
+            Retour
           </button>
           <button
             className="continue-button"
             onClick={() => handleNavigateClick(selectedCat)}
           >
-            Continue
+            Poursuivre
           </button>
         </div>
       </section>
