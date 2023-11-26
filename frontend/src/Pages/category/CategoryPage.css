@@ -101,22 +101,17 @@
   }
 }
 
-@media (min-height: 650px) {
-  .cat-select-container {
-    /* height: 45vh; */
-  }
-}
-
 .nav-bar-cat .continue-button {
   margin: 0.5rem;
+  padding: 0px 16px;
   border-radius: 2rem;
-  width: 102px;
   height: 48px;
   border-width: 1px;
   background-color: #012e40;
   color: white;
   font-size: 16px;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .nav-bar-cat .back-button {

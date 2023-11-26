@@ -1,7 +1,7 @@
 .flip-alert {
   position: absolute;
   z-index: 99;
-  height: 100vh;
+  height: 100svh;
   width: 100vw;
   display: none;
   /* flex-direction: column; */
@@ -32,8 +32,8 @@
   display: flex;
   align-self: stretch;
   flex-direction: column;
-  justify-content: space-between;
-  height: 11vh;
+  gap: 0.1rem;
+  height: auto;
 }
 
 .main-nav .progress-title {
