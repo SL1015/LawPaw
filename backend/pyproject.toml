@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "flaskapp"
+version = "0.1.0"
+description = "Backend of LawPaw"
+authors = ["SL1015 <91118605+SL1015@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.9.18"
+flask = "^3.0.0"
+qdrant-client = "^1.6.9"
+flask-cors = "^4.0.0"
+langchain = "^0.0.341"
+pypdfium2 = "^4.24.0"
+deepl = "^1.16.1"
+torch = "^2.1.1"
+transformers = "^4.35.2"
+contractions = "^0.1.73"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

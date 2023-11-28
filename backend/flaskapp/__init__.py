@@ -14,21 +14,9 @@ def create_app():
 
     app.logger.info(httpx.__version__)
 
-    # query_vector = np.random.rand(384)
-    # CollectionName = 'swiss-or'
-    # client = QdrantClient(host="localhost", port=6333)
-    # hits = client.search(
-    #     collection_name="swiss-or",
-    #     query_vector=query_vector,
-    #     limit=5  # Return 5 closest points
-    # )
-    # app.logger.info(hits)
-    
-
     # Import and register blueprints
     from .chatbot import chatbot_blueprint
     app.register_blueprint(chatbot_blueprint)
-
 
     # a simple page that says hello
     @app.route('/hello')

@@ -87,7 +87,7 @@ def get_top_results(hits1,hits2):
 
 def search_context(query,lang,kanton):
   query_vector = query_to_vec(query, lang)
-  client = QdrantClient(host="localhost", port=6333)
+  client = QdrantClient(host="qdrant", port=6333)
   if kanton == 'ag':
     collections1 = 'swiss-ag'
     hits1 = client.search(
@@ -133,7 +133,7 @@ def qa_chatbot(query, lang, kanton):
   current_app.logger.info(context_raw)
   context,links = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
-  ollama = ChatOllama(base_url='http://localhost:11434', model="mistral", temperature=0.1)
+  ollama = ChatOllama(base_url='http://ollama:11434', model="mistral", temperature=0.1)
   #TODO: language specific prompt engineering
   chat_text = """
   You are a legal assistant expert on the Swiss Code of Obligations.
@@ -165,11 +165,11 @@ def qa_chatbot(query, lang, kanton):
 chatbot_blueprint = Blueprint('chatbot', __name__)
 
 # running llm model docker image
-ollama = Ollama(base_url='http://localhost:11434',
+ollama = Ollama(base_url='http://ollama:11434',
 model="mistral")
 
 # Qdrant host and port
-client = QdrantClient(host="localhost", port=6333)
+client = QdrantClient(host="qdrant", port=6333)
 
 '''
 @chatbot_blueprint.route('/chatbot', methods=['GET'])
