@@ -14,8 +14,5 @@ RUN poetry install --no-dev
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Define environment variable
-#ENV FLASK_APP=flaskapp
-
 # Run the scripts when the container launches
 CMD ["flask", "--app=flaskapp", "run", "--host=0.0.0.0", "--debug"]

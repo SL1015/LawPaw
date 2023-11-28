@@ -132,6 +132,11 @@ def search_context(query,lang,kanton):
         )
     return hits
 
+import openai
+key_openai = json.load(open("openai_credential.json"))
+os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
+
+
 def qa_chatbot(query, lang, kanton):
   context_raw = search_context(query, lang, kanton)
   current_app.logger.info(context_raw)
@@ -150,16 +155,18 @@ def qa_chatbot(query, lang, kanton):
   Context: {context}
   Question: {query}
   """
-  #llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
+  llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
   prompt_template = ChatPromptTemplate.from_template(chat_text)
-  #chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
+  chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
   ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
-  answer = ollama_llm_chain.run(context=chat_text,
-                            query=query,source_links=links)
+  answer = ollama_llm_chain.run(context=chat_text, query=query,source_links=links)
+  #answer_gpt = chatgpt_llm_chain.run(context=chat_text, query=query, source_links=links)
   if lang != ('en' or 'de'):
       detector = translator.translate_text(query, target_lang="DE")
       answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
+      #answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
   return answer
+  #return answer_gpt
 #########
 
 
