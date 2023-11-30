@@ -5,6 +5,8 @@ from langchain.llms import Ollama
 import requests
 import json
 from qdrant_client import QdrantClient
+from qdrant_client.http import models
+from qdrant_client.http.models import CollectionStatus
 import numpy as np
 
 
@@ -36,6 +38,8 @@ from langchain.vectorstores import Qdrant
 from langchain.document_loaders import TextLoader
 import deepl
 
+from qdrant_client import QdrantClient
+
 '''llm model'''
 from transformers import AutoModel, AutoTokenizer
 import torch
@@ -54,122 +58,126 @@ def average_pool(last_hidden_states: Tensor,
     last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
     return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
-def query_to_vec(query, lang):
-  if lang == 'en':
-    batch_dict = tokenizer_en(query, max_length=512, padding=True, truncation=True, return_tensors='pt')
-    outputs = model_en(**batch_dict)
-  elif lang == 'de':
-    batch_dict = tokenizer_de(query, max_length=512, padding=True, truncation=True, return_tensors='pt')
-    outputs = model_de(**batch_dict)
-
-  embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
-  embeddings = embeddings.detach().numpy()
-  embeddings = embeddings[0]
-
-
-  return embeddings
+def embedding(text,lang):
+    if lang == 'en':
+        batch_dict = tokenizer_en(text, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        outputs = model_en(**batch_dict)
+    else:
+        batch_dict = tokenizer_de(text, max_length=512, padding=True, truncation=True, return_tensors='pt')
+        outputs = model_de(**batch_dict)
+    embeddings = average_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
+    embeddings = embeddings.detach().numpy()
+    embeddings = embeddings[0]
+    return embeddings
 
 def doc_to_rscope(docs):
   rscope = ""
   links = []
   for doc in docs:
-    test = doc.payload['content']
+    content = doc.payload['content']
     links.append(doc.payload['link'])
     #current_app.logger.info(test)
-    rscope += test + "\n\n"
+    rscope += content + "\n\n"
   return rscope,links
 
-from qdrant_client import QdrantClient
+
+key_file = json.load(open("deepl_credential.json"))
+key_deepl =  key_file['key'][0]
+translator = deepl.Translator(key_deepl)
+
 def get_top_results(hits1,hits2):
   combined_lst = hits1 + hits2
   sorted_lst = sorted(combined_lst,key = lambda x:x.score,reverse=True)
-  return sorted_lst[:5]
+  return sorted_lst[:3]
+
+def query_embedding(query,lang,kanton):
+    if kanton == 'all':
+        if lang != 'en' and lang != 'de':
+            print(lang)
+            query = translator.translate_text(query,target_lang='EN-GB').text
+            query_embedding = embedding(query,'en')
+        else:
+            query_embedding = embedding(query,lang)
+    else:
+        if lang != 'de':
+            query = translator.translate_text(query,target_lang='DE').text
+        query_embedding = embedding(query,'de')
+    return query_embedding
 
 def search_context(query,lang,kanton):
-  query_vector = query_to_vec(query, lang)
-  client = QdrantClient(host="localhost", port=6333)
-  if kanton == 'ag':
-    collections1 = 'swiss-ag'
-    hits1 = client.search(
-          collection_name="swiss-de",
-          query_vector=query_vector,
-          limit=3  # Return 5 closest points
-      )
-    try:
-      hits2 = client.search(
-          collection_name=collections1,
-          query_vector=query_vector,
-          limit=3  # Return 5 closest points
+    query_vecs = query_embedding(query,lang,kanton)
+    client = QdrantClient(host="qdrant",port=6333)
+    if kanton != 'all':
+        collection1 = 'swiss-'+kanton
+        hits1=client.search(
+            collection_name=collection1,
+            query_vector = query_vecs,
+            limit=3
         )
-      hits = get_top_results(hits1,hits2)
-    except:
-      return hits1
-  else:
-    if lang == 'en':
-      collections="swiss-or"
-    elif lang == 'de':
-      collections="swiss-de"
-    hits = client.search(
-          collection_name=collections,
-          query_vector=query_vector,
-          limit=3  # Return 5 closest points
-      )
-  return hits
+        hits2=client.search(
+            collection_name = 'swiss-de',
+            query_vector = query_vecs,
+            limit = 3
+        )
+        hits = get_top_results(hits1,hits2)
+    else:
+        if lang!='de':
+            collection = 'swiss-or'
+        else:
+            collection = 'swiss-de'
+        hits=client.search(
+            collection_name=collection,
+            query_vector = query_vecs,
+            limit=3
+        )
+    return hits
 
-# deepl_auth_key = cfg['deepl_auth_key']
-# translator = deepl.Translator(deepl_auth_key)
-# text = "Hello I am loving this pasta"
-# result = translator.translate_text(text, target_lang="DE")
-# print(result.text)
-# print(result.detected_source_lang)
+import openai
+key_openai = json.load(open("openai_credential.json"))
+os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
 
-#search_context('How long is the maternity leave?')
-key_file = json.load(open("deepl_credential.json"))
-#os.environ['DEEPL_AUTH_KEY'] = key_file['key'][0]
-key_deepl =  key_file['key'][0]
-translator = deepl.Translator(key_deepl)
+
 def qa_chatbot(query, lang, kanton):
   context_raw = search_context(query, lang, kanton)
   current_app.logger.info(context_raw)
   context,links = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
-  ollama = ChatOllama(base_url='http://localhost:11434', model="mistral", temperature=0.1)
+  ollama = ChatOllama(base_url='http://ollama:11434', model="mistral", temperature=0.1)
   #TODO: language specific prompt engineering
   chat_text = """
-  You are a legal assistant expert on the Swiss Code of Obligations.
+ You are a legal assistant expert on the Swiss Code of Obligations.
   Answer questions related to contract law, employment regulations,
   or corporate obligations.
   Base your answers exclusively on the provided top 3 articles from the Swiss Code of Obligations.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
   The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
-  If an answer is not explicitly covered in the provided context, please indicate so.
-  If the source link is not available, simply provide the code number in which the user can use as a reference.
+  If an answer is not explicitly covered in the provided context, please indicate so by saying 'Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!'
   Context: {context}
   Question: {query}
   """
-  #llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
+  llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
   prompt_template = ChatPromptTemplate.from_template(chat_text)
-  #chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
+  chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
   ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
-  answer = ollama_llm_chain.run(context=chat_text,
-                            query=query,source_links=links)
-  detector = translator.translate_text(query, target_lang="DE")
-  if lang == 'en':
-    pass
-  else:
-    answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
+  answer = ollama_llm_chain.run(context=chat_text, query=query,source_links=links)
+  #answer_gpt = chatgpt_llm_chain.run(context=chat_text, query=query, source_links=links)
+  if lang != ('en' or 'de'):
+      detector = translator.translate_text(query, target_lang="DE")
+      answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
+      #answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
   return answer
+  #return answer_gpt
 #########
 
 
 chatbot_blueprint = Blueprint('chatbot', __name__)
 
 # running llm model docker image
-ollama = Ollama(base_url='http://localhost:11434',
+ollama = Ollama(base_url='http://ollama:11434',
 model="mistral")
 
 # Qdrant host and port
-client = QdrantClient(host="localhost", port=6333)
+client = QdrantClient(host="qdrant", port=6333)
 
 '''
 @chatbot_blueprint.route('/chatbot', methods=['GET'])
@@ -187,6 +195,7 @@ def getResponse():
     lang = data.get('lang')
     kanton = data.get('kanton')
     current_app.logger.info(lang)
+    current_app.logger.info("docker update check")
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
