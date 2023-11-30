@@ -3,6 +3,7 @@ import "./ChatBox.css";
 import { sendMessageToAPI } from "../api/chat/api";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import SelectQuestions from "./SelectQuestions";
 
 const ChatBox = ({ Language, Canton, Category }) => {
   const [message, setMessage] = useState("");
@@ -11,6 +12,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
   const [clientInput, setClientInput] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // const [selectedQuestion, setSelectedQuestion] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,6 +37,11 @@ const ChatBox = ({ Language, Canton, Category }) => {
         setTextareaHeight("150px");
       }
     }
+  };
+
+  const handleSelectedQuestion = (question) => {
+    // setSelectedQuestion(question);
+    setMessage(question);
   };
 
   useEffect(() => {
@@ -90,6 +97,10 @@ const ChatBox = ({ Language, Canton, Category }) => {
           Language={Language}
         />
       </section>
+      <SelectQuestions
+        onSelectQuestion={handleSelectedQuestion}
+        submitted={formSubmitted}
+      />
     </>
   );
 };

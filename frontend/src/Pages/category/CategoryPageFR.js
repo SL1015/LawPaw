@@ -54,7 +54,7 @@ const CategoryPageEN = () => {
             </h1>
             <p>
               Choisissez votre catégorie de droit et ouvrez la porte à des
-              conseils personnalisés. personnalisés, faits pour vous.
+              conseils personnalisés.
             </p>
           </div>
           <div className="cat-select-container">

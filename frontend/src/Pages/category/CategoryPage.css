@@ -4,9 +4,10 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.8rem;
+  gap: 0.5rem;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-bottom: 5px;
 }
 
 .cat-select-container::-webkit-scrollbar {
@@ -15,8 +16,8 @@
 
 .cat-select-container .cat-button {
   all: unset;
-  width: 128px;
-  height: 146px;
+  width: 115px;
+  height: 140px;
   display: flex;
   padding: 14.532px 10.899px 10.899px 10.899px;
   flex-direction: column;
@@ -47,7 +48,7 @@
 .cat-select-container .cat-button .info-container p {
   margin: 0;
   color: #636c6e;
-  font-size: 13px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 15px;

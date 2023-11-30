@@ -3,19 +3,21 @@ import "./ChatBox.css";
 import callBotApi from "../api/chat/APIbot";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import SelectQuestions from "./SelectQuestions";
 
-const ChatBox = ({Language, Canton, Category}) => {
+const ChatBox = ({ Language, Canton, Category }) => {
   const [message, setMessage] = useState("");
   const [textareaHeight, setTextareaHeight] = useState("auto");
   const [aiBotResponse, setAiBotResponse] = useState("");
   const [clientInput, setClientInput] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // const [selectedQuestion, setSelectedQuestion] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!message.trim()) {
-        return;
+      return;
     }
     setClientInput(message);
     setMessage("");
@@ -37,6 +39,11 @@ const ChatBox = ({Language, Canton, Category}) => {
     }
   };
 
+  const handleSelectedQuestion = (question) => {
+    // setSelectedQuestion(question);
+    setMessage(question);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (clientInput) {
@@ -53,32 +60,34 @@ const ChatBox = ({Language, Canton, Category}) => {
           }
         } catch (error) {
           console.error("Error calling callBotApi:", error);
-        } 
+        }
       }
     };
 
     fetchData();
   }, [clientInput]);
 
-  
-
   return (
     <>
       <section className="chat-window">
-      <ChatMessages
-        clientInput={clientInput}
-        aiBotResponse={aiBotResponse}
-        isLoading={isLoading}
-        formSubmitted={formSubmitted}
+        <ChatMessages
+          clientInput={clientInput}
+          aiBotResponse={aiBotResponse}
+          isLoading={isLoading}
+          formSubmitted={formSubmitted}
+        />
+        <ChatInput
+          message={message}
+          textareaHeight={textareaHeight}
+          onTextareaChange={handleTextareaChange}
+          onSubmit={handleSubmit}
+          Language={Language}
+        />
+      </section>
+      <SelectQuestions
+        onSelectQuestion={handleSelectedQuestion}
+        submitted={formSubmitted}
       />
-      <ChatInput
-        message={message}
-        textareaHeight={textareaHeight}
-        onTextareaChange={handleTextareaChange}
-        onSubmit={handleSubmit}
-        Language={Language}
-      />
-    </section>
     </>
   );
 };

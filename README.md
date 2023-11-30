@@ -9,7 +9,15 @@ Backend instructions
   > docker compose logs -f  
 2. Manually add snapshots into qdrant (TODO: trying to automate it)  
 
-
+===  
+Frontend instructions  
+1. Open terminal in LawPaw project  
+  > cd frontend  
+  > mv package-lock.txt package.json  
+  > mv package.txt package.json  
+  > npm install  
+  > npm start   
+2. The application will be launched at [http://localhost:3000](http://localhost:3000)
 
 ## Steps
 
