@@ -1,13 +1,22 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ChatInput.css";
 import SendBtn from "./Images/icons/send.svg"
+import SendBtnInactive from "./Images/icons/send-inactive.svg"
 
 const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit, Language }) => {
   const myFormRef = useRef(null);
+  const [isMessageEmpty, setIsMessageEmpty] = useState(true);
+
+  useEffect(() => {
+    setIsMessageEmpty(!message.trim());
+  }, [message]);
+
   const onEnterPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      myFormRef.current.requestSubmit();
+      if (!isMessageEmpty) {
+        myFormRef.current.requestSubmit();
+      }
     }
   };
 
@@ -33,7 +42,7 @@ const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit, Langua
           onKeyDown={onEnterPress}
         ></textarea>
         <button type="submit">
-          <img src={SendBtn} alt="Send Message But"/>
+          <img src={isMessageEmpty ? SendBtnInactive : SendBtn} alt="Send Message But"/>
         </button>
       </form>
     </div>

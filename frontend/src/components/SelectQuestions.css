@@ -10,6 +10,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.4s ease-in-out;
+}
+
+.questions-container.submitted {
+  transform: translateX(200%);
 }
 
 .questions-logo {
@@ -40,4 +45,10 @@
   background: #fff;
   height: 48px;
   padding: 0px 24px;
+  transition: all 0.2s ease-in-out;
+}
+
+.questions-container ul li button.active {
+  background: #DCE3E4;
+  color: #012E40;
 }

@@ -12,7 +12,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
   const [clientInput, setClientInput] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState(""); 
+  // const [selectedQuestion, setSelectedQuestion] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -40,9 +40,9 @@ const ChatBox = ({ Language, Canton, Category }) => {
   };
 
   const handleSelectedQuestion = (question) => {
-    setSelectedQuestion(question);
-    setMessage(selectedQuestion);
-  }
+    // setSelectedQuestion(question);
+    setMessage(question);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,10 +81,13 @@ const ChatBox = ({ Language, Canton, Category }) => {
           textareaHeight={textareaHeight}
           onTextareaChange={handleTextareaChange}
           onSubmit={handleSubmit}
-          Language={Language}          
+          Language={Language}
         />
       </section>
-      <SelectQuestions onSelectQuestion={handleSelectedQuestion} />
+      <SelectQuestions
+        onSelectQuestion={handleSelectedQuestion}
+        submitted={formSubmitted}
+      />
     </>
   );
 };
