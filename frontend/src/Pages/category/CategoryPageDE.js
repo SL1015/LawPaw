@@ -52,13 +52,10 @@ const CategoryPageEN = () => {
               Wählen Sie Ihren <br />
               Rechtlichen Weg
             </h1>
-            <p>
-              Wählen Sie Ihre Rechtskategorie und öffnen Sie die Tür zu einer
-              persönlichen Beratung, die nur für Sie bestimmt ist.
-            </p>
+            <p>Rechtskategorie wählen für individuelle Beratung.</p>
           </div>
           <div className="cat-select-container">
-          <button
+            <button
               className={`cat-button cat-one ${
                 selectedCat === "1" ? "active" : ""
               }`}
@@ -67,7 +64,10 @@ const CategoryPageEN = () => {
               <img src={Cat1} alt="Contract icon" />
               <div className="info-container">
                 <h4>Vertrag</h4>
-                <p>Ihr Kumpel für das Verständnis von Verträgen und Vereinbarungen.</p>
+                <p>
+                  Ihr Kumpel für das Verständnis von Verträgen und
+                  Vereinbarungen.
+                </p>
               </div>
             </button>
             <button
@@ -79,7 +79,10 @@ const CategoryPageEN = () => {
               <img src={Cat2} alt="Employment icon" />
               <div className="info-container">
                 <h4>Beschäftigung</h4>
-                <p>Wir führen Sie durch die Welt der Beschäftigung und ihrer Vorschriften.</p>
+                <p>
+                  Wir führen Sie durch die Welt der Beschäftigung und ihrer
+                  Vorschriften.
+                </p>
               </div>
             </button>
             <button
@@ -91,7 +94,10 @@ const CategoryPageEN = () => {
               <img src={Cat3} alt="Rental icon" />
               <div className="info-container">
                 <h4>Vermietung</h4>
-                <p>Ein Kumpel, der Ihnen bei Mietproblemen hilft und die Regeln erklärt.</p>
+                <p>
+                  Ein Kumpel, der Ihnen bei Mietproblemen hilft und die Regeln
+                  erklärt.
+                </p>
               </div>
             </button>
             <button
@@ -103,7 +109,7 @@ const CategoryPageEN = () => {
               <img src={Cat4} alt="Family icon" />
               <div className="info-container">
                 <h4>Familie</h4>
-                <p>Wir helfen Ihnen bei der Bewältigung von Heirat, Scheidung und Sorgerecht für Ihre Kinder.</p>
+                <p>Unterstützung in Heirat, Scheidung und Sorgerecht.</p>
               </div>
             </button>
             <button
@@ -127,7 +133,7 @@ const CategoryPageEN = () => {
               <img src={Cat6} alt="Tort icon" />
               <div className="info-container">
                 <h4>Deliktsrecht</h4>
-                <p>Freundliche Beratung bei zivilrechtlichen Streitigkeiten, Verletzungen und Rechtsbehelfen.</p>
+                <p>Beratung zu zivilrechtlichen Streitigkeiten.</p>
               </div>
             </button>
           </div>

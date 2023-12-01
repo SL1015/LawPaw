@@ -67,11 +67,6 @@ function App() {
             path="/:language/:canton/:category"
             element={<ChatBotPage />}
           />
-          {/* <Route path="/de/:canton" element={<CategoryPageDE />} /> */}
-          {/* <Route path="/en/:canton" element={<CategoryPageEN />} /> */}
-          {/* <Route path="/fr/:canton" element={<CategoryPageFR />} /> */}
-          {/* <Route path="/:language/:canton/0" element={<ChatBotPage />} /> */}
-          {/* <Route path="/de" element={<CantonPageDE />} /> */}
         </Routes>
       </BrowserRouter>
     </React.StrictMode>

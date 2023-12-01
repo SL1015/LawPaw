@@ -53,7 +53,7 @@
 .lang-select-container button {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 1rem;
   width: 215px;
   height: 48px;
