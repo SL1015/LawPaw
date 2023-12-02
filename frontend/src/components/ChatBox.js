@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ChatBox.css";
 import { sendMessageToAPI } from "../api/chat/api";
 import ChatInput from "./ChatInput";
@@ -8,22 +8,34 @@ import SelectQuestions from "./SelectQuestions";
 const ChatBox = ({ Language, Canton, Category }) => {
   const [message, setMessage] = useState("");
   const [textareaHeight, setTextareaHeight] = useState("auto");
-  const [aiBotResponse, setAiBotResponse] = useState("");
-  const [clientInput, setClientInput] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [selectedQuestion, setSelectedQuestion] = useState("");
+  const [clientInputs, setClientInputs] = useState([]);
+  const [botResponses, setBotResponses] = useState([]);
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!message.trim()) {
       return;
     }
-    setClientInput(message);
+
+    const userMessage = message.trim();
+    setClientInputs((prevClientInputs) => [...prevClientInputs, userMessage]);
     setMessage("");
     setTextareaHeight("auto");
-    setFormSubmitted(true);
-    console.log(`Lang: ${Language}, Canton: ${Canton}, Cat: ${Category} `);
+
+    try {
+      setFormSubmitted(true)
+      setIsLoading(true);
+      const response = await sendMessageToAPI(userMessage);
+      setIsLoading(false);
+
+      setBotResponses((prevBotResponses) => [...prevBotResponses, response]);
+    } catch (error) {
+      console.error("Error calling callBotApi:", error);
+      setIsLoading(false);
+    }
   };
 
   const handleTextareaChange = (event) => {
@@ -40,54 +52,16 @@ const ChatBox = ({ Language, Canton, Category }) => {
   };
 
   const handleSelectedQuestion = (question) => {
-    // setSelectedQuestion(question);
     setMessage(question);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (clientInput) {
-        setIsLoading(true);
-
-        try {
-          const response = await sendMessageToAPI(
-            clientInput,
-            Language,
-            Canton,
-            Category
-          );
-
-          if (typeof response === "string") {
-            let currentResponse = "";
-            setIsLoading(false);
-            for (let i = 0; i < response.length; i++) {
-              currentResponse += response.charAt(i);
-              setAiBotResponse(currentResponse);
-              await new Promise((resolve) => setTimeout(resolve, 15));
-            }
-            setAiBotResponse(currentResponse);
-          }
-
-          setIsLoading(false);
-        } catch (error) {
-          console.error("Error calling sendMessageToAPI:", error);
-        } finally {
-          setFormSubmitted(true);
-        }
-      }
-    };
-
-    fetchData();
-  }, [clientInput, Canton, Category, Language]);
 
   return (
     <>
       <section className="chat-window">
         <ChatMessages
-          clientInput={clientInput}
-          aiBotResponse={aiBotResponse}
+          clientInputs={clientInputs}
+          botResponses={botResponses}
           isLoading={isLoading}
-          formSubmitted={formSubmitted}
         />
         <ChatInput
           message={message}
@@ -98,9 +72,9 @@ const ChatBox = ({ Language, Canton, Category }) => {
         />
       </section>
       <SelectQuestions
-        onSelectQuestion={handleSelectedQuestion}
-        submitted={formSubmitted}
-      />
+         onSelectQuestion={handleSelectedQuestion}
+         submitted={formSubmitted}
+       />
     </>
   );
 };
