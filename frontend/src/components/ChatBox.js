@@ -28,7 +28,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
     try {
       setFormSubmitted(true)
       setIsLoading(true);
-      const response = await sendMessageToAPI(userMessage);
+      const response = await sendMessageToAPI(userMessage, Language, Canton, Category);
       setIsLoading(false);
 
       setBotResponses((prevBotResponses) => [...prevBotResponses, response]);
