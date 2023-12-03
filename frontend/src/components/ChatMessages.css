@@ -68,6 +68,7 @@
   padding: 1rem;
   border-radius: 20px 20px 5px 20px;
   background-color: #012e40;
+  white-space: pre-wrap;
 }
 
 .bot-response {
@@ -96,6 +97,7 @@
   padding: 1rem;
   border-radius: 20px 20px 20px 5px;
   background-color: #ededed;
+  white-space: pre-wrap;
 }
 
 .bot-response p {

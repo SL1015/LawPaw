@@ -16,7 +16,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!message.trim()) {
+    if (!message.trim() || isLoading) {
       return;
     }
 

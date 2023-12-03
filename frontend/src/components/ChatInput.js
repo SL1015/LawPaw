@@ -1,18 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChatInput.css";
-import SendBtn from "./Images/icons/send.svg"
-import SendBtnInactive from "./Images/icons/send-inactive.svg"
+import SendBtn from "./Images/icons/send.svg";
+import SendBtnInactive from "./Images/icons/send-inactive.svg";
 
-const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit, Language }) => {
+const ChatInput = ({
+  message,
+  textareaHeight,
+  onTextareaChange,
+  onSubmit,
+  Language,
+  isLoading
+}) => {
   const myFormRef = useRef(null);
   const [isMessageEmpty, setIsMessageEmpty] = useState(true);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
     setIsMessageEmpty(!message.trim());
   }, [message]);
 
+  useEffect(() => {
+    const onTouchStart = () => setIsTouchDevice(true);
+    window.addEventListener("touchstart", onTouchStart);
+
+    return () => window.removeEventListener("touchstart", onTouchStart);
+  }, []);
+
   const onEnterPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey && !isTouchDevice) {
       e.preventDefault();
       if (!isMessageEmpty) {
         myFormRef.current.requestSubmit();
@@ -23,8 +38,7 @@ const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit, Langua
   const placeholders = {
     en: "Ask your LawPaw...",
     de: "Fragen sie ihren LawPaw...",
-    fr: "Demandez à votre LawPaw..."
-    
+    fr: "Demandez à votre LawPaw...",
   };
 
   return (
@@ -42,7 +56,10 @@ const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit, Langua
           onKeyDown={onEnterPress}
         ></textarea>
         <button type="submit">
-          <img src={isMessageEmpty ? SendBtnInactive : SendBtn} alt="Send Message But"/>
+          <img
+            src={isMessageEmpty || isLoading ? SendBtnInactive : SendBtn}
+            alt="Send Message But"
+          />
         </button>
       </form>
     </div>
