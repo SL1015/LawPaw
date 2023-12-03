@@ -1,10 +1,10 @@
 .cat-select-container {
-  height: 60%;
+  height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 10px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-bottom: 5px;
@@ -16,8 +16,9 @@
 
 .cat-select-container .cat-button {
   all: unset;
-  width: 115px;
-  height: 140px;
+  width: 37%;
+  min-height: 140px;
+  height: auto;
   display: flex;
   padding: 14.532px 10.899px 10.899px 10.899px;
   flex-direction: column;
@@ -90,8 +91,10 @@
 } */
 
 .nav-bar-cat {
-  height: 20%;
+  position: fixed;
+  bottom: 0;
   width: 100%;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
 }
@@ -99,6 +102,12 @@
 @media (min-width: 390px) {
   .nav-bar-cat {
     width: 380px;
+  }
+}
+
+@media (min-height: 800px) {
+  .cat-select-container {
+    height: 85%;
   }
 }
 
@@ -130,6 +139,7 @@
 
 .idk-button {
   margin-top: 0.3rem;
+  margin-bottom: 85px;
   border-radius: 2rem;
   width: 250px;
   height: 40px;

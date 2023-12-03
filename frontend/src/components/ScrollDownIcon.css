@@ -1,0 +1,48 @@
+.containerScroll {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  position: absolute;
+  bottom: 0;
+  opacity: 0.4;
+}
+
+
+.containerScroll p {
+  margin: 0;
+  font-family: inherit;
+  color: #012E40;
+  font-weight: 600;
+  animation: scrollP ease 1.5s infinite;
+}
+
+.containerScroll p:nth-child(1) {
+    font-size: 1.3rem;
+}
+.containerScroll p:nth-child(2) {
+    font-size: 1.0rem;
+}
+.containerScroll p:nth-child(3) {
+    font-size: 0.7rem;
+}
+
+@keyframes scrollP {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(50%);
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(100px);
+  }
+}

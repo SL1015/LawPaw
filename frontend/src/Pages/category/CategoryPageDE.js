@@ -9,6 +9,7 @@ import Cat4 from "../../components/Images/icons/cat4.svg";
 import Cat5 from "../../components/Images/icons/cat5.svg";
 import Cat6 from "../../components/Images/icons/cat6.svg";
 import FlipAlert from "../../components/FlipAlert";
+// import ScrollDownIcon from "../../components/ScrollDownIcon";
 
 const CategoryPageEN = () => {
   const { language, canton } = useParams();
@@ -22,7 +23,7 @@ const CategoryPageEN = () => {
   };
 
   const handleSkipClick = () => {
-    // navigate(`/en/${canton}/0`)
+    navigate(`/${language}/${canton}/0`);
   };
 
   const handleNavigateClick = () => {
@@ -39,7 +40,7 @@ const CategoryPageEN = () => {
       <section className="main-nav">
         <div className="progress-title">
           <h4>Schritt 3: Rechtlicher Weg</h4>
-          <p onClick={handleSkipClick()}>Skip</p>
+          <p onClick={() => handleSkipClick()}>Skip</p>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-three"></div>
@@ -136,11 +137,12 @@ const CategoryPageEN = () => {
                 <p>Beratung zu zivilrechtlichen Streitigkeiten.</p>
               </div>
             </button>
+            {/* <ScrollDownIcon /> */}
           </div>
         </div>
-        <button className="idk-button" onClick={() => handleSkipClick()}>
+        {/* <button className="idk-button" onClick={() => handleSkipClick()}>
           Ich weiß es nicht.
-        </button>
+        </button> */}
         <div className="nav-bar-cat">
           <button className="back-button" onClick={() => handleBackClick()}>
             Zurück

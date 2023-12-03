@@ -44,7 +44,7 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
           clearInterval(typingEffect);
           setResponseIndex(responseIndex + 1);
         }
-      }, 25);
+      }, 10);
 
       return () => clearInterval(typingEffect);
     }

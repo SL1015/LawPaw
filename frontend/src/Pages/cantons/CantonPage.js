@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./CantonPage.css";
 import FlipAlert from "../../components/FlipAlert";
+// import ScrollDownIcon from "../../components/ScrollDownIcon";
 
 const HomePage = () => {
   const { language } = useParams();
@@ -204,6 +205,7 @@ const HomePage = () => {
             >
               <span>Jura</span>
             </button>
+            {/* <ScrollDownIcon /> */}
           </div>
         </div>
         <div className="nav-bar-canton">

@@ -9,6 +9,7 @@ import Cat4 from "../../components/Images/icons/cat4.svg";
 import Cat5 from "../../components/Images/icons/cat5.svg";
 import Cat6 from "../../components/Images/icons/cat6.svg";
 import FlipAlert from "../../components/FlipAlert";
+// import ScrollDownIcon from "../../components/ScrollDownIcon";
 
 const CategoryPageEN = () => {
   const { language, canton } = useParams();
@@ -26,7 +27,7 @@ const CategoryPageEN = () => {
   };
 
   const handleSkipClick = () => {
-    navigate(`/en/${canton}/0`);
+    navigate(`/${language}/${canton}/0`);
   };
 
   const handleNavigateClick = () => {
@@ -134,11 +135,12 @@ const CategoryPageEN = () => {
                 <p>Friendly advice on civil wrongs, injuries, and remedies.</p>
               </div>
             </button>
+            {/* <ScrollDownIcon /> */}
           </div>
         </div>
-        <button className="idk-button" onClick={() => handleCatClick("0")}>
+        {/* <button className="idk-button" onClick={() => handleCatClick("0")}>
           I don’t know
-        </button>
+        </button> */}
         <div className="nav-bar-cat">
           <button className="back-button" onClick={() => handleBackClick()}>
             Back

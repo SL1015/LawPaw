@@ -24,4 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 src/api/chat/APIbot.js
+src/api/chat/APIserver.js
 src/components/ChatBoxTest.js

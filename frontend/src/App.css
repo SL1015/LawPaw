@@ -1,3 +1,7 @@
+#root {
+  height: 100svh;
+}
+
 .flip-alert {
   position: absolute;
   z-index: 99;
@@ -8,7 +12,7 @@
   align-items: center;
   justify-content: space-evenly;
   background-image: url("./components//Images/Location.png");
-  background-size: cover;
+  background-size: fill;
   text-align: center;
 }
 
@@ -29,6 +33,7 @@
 }
 
 .main-nav {
+  position: relative;
   display: flex;
   align-self: stretch;
   flex-direction: column;
