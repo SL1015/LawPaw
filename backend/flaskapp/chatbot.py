@@ -38,6 +38,8 @@ from langchain.vectorstores import Qdrant
 from langchain.document_loaders import TextLoader
 import deepl
 
+from urllib.parse import unquote
+
 from qdrant_client import QdrantClient
 
 '''llm model'''
@@ -136,16 +138,14 @@ import openai
 key_openai = json.load(open("openai_credential.json"))
 os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
 
-
 def qa_chatbot(query, lang, kanton):
   context_raw = search_context(query, lang, kanton)
   current_app.logger.info(context_raw)
   context,links = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
   ollama = ChatOllama(base_url='http://ollama:11434', model="mistral", temperature=0.1)
-  #TODO: language specific prompt engineering
   chat_text = """
- You are a legal assistant expert on the Swiss Code of Obligations.
+  You are a legal assistant expert on the Swiss Code of Obligations.
   Answer questions related to contract law, employment regulations,
   or corporate obligations.
   Base your answers exclusively on the provided top 3 articles from the Swiss Code of Obligations.
@@ -159,14 +159,14 @@ def qa_chatbot(query, lang, kanton):
   prompt_template = ChatPromptTemplate.from_template(chat_text)
   chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
   ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
-  answer = ollama_llm_chain.run(context=chat_text, query=query,source_links=links)
-  #answer_gpt = chatgpt_llm_chain.run(context=chat_text, query=query, source_links=links)
+  #answer = ollama_llm_chain.run(context=chat_text, query=query,source_links=links)
+  answer_gpt = chatgpt_llm_chain.run(context=chat_text, query=query, source_links=links)
   if lang != ('en' or 'de'):
       detector = translator.translate_text(query, target_lang="DE")
-      answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
-      #answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
-  return answer
-  #return answer_gpt
+      #answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
+      answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
+  #return answer
+  return answer_gpt
 #########
 
 
@@ -188,14 +188,13 @@ def test_connection():
 
 @chatbot_blueprint.route('/chatbot', methods=['POST'])
 def getResponse():
-    #request = "introduce yourself"
     # Get the message from the JSON request
     data = request.get_json()
-    user_message = data.get('message')
-    lang = data.get('lang')
-    kanton = data.get('kanton')
+    user_message = data.get('message').strip('\"')
+    lang = data.get('lang').strip('\"')
+    kanton = data.get('kanton').strip('\"')
     current_app.logger.info(lang)
-    current_app.logger.info("docker update check")
+    current_app.logger.info(kanton)
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
