@@ -1,18 +1,60 @@
-.App {
+#root {
+  height: 100svh;
+}
+
+.flip-alert {
+  position: absolute;
+  z-index: 99;
+  height: 100svh;
+  width: 100vw;
+  display: none;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: space-evenly;
+  background-image: url("./components//Images/Location.png");
+  background-size: fill;
   text-align: center;
 }
 
-.main-nav {
-  display: flex;
-  /* padding: 48px 24px 12px 24px; */
-  justify-content: space-between;
-  align-self: stretch;
-  flex-direction: column;
+.flip-alert .logoLaw {
+  width: 200px;
+  margin: 1rem;
 }
 
-.main-nav .progress-title h3 {
-  margin: 3rem 1.8rem 1.3rem;
+.flip-alert .flipImg {
+  width: 90px;
+  margin: 1rem;
+}
 
+@media (max-height: 450px) {
+  .flip-alert {
+    display: flex;
+  }
+}
+
+.main-nav {
+  position: relative;
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  gap: 0.1rem;
+  height: auto;
+}
+
+.main-nav .progress-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-nav .progress-title p {
+  margin: 2rem 1rem 1rem;
+  cursor: pointer ;
+}
+
+.main-nav .progress-title h4 {
+  margin: 2rem 1rem 1rem;
+  color: #012E40;
 }
 
 .progress-bar-container {
@@ -24,7 +66,31 @@
 .progress-bar-one {
   color: #000!important;
   border-radius: 1rem;
-  background-color: #1F2223!important;
+  background-color: #F9AA34!important;
   height: 4px;
   width: 10%;
+}
+
+.progress-bar-two {
+  color: #000!important;
+  border-radius: 1rem;
+  background-color: #F9AA34!important;
+  height: 4px;
+  width: 50%;
+}
+
+.progress-bar-three {
+  color: #000!important;
+  border-radius: 1rem;
+  background-color: #F9AA34!important;
+  height: 4px;
+  width: 80%;
+}
+
+.progress-bar-full {
+  color: #000!important;
+  border-radius: 1rem;
+  background-color: #012E40!important;
+  height: 4px;
+  width: 100%;
 }

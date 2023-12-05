@@ -1,23 +1,151 @@
 .cat-select-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-bottom: 5px;
 }
 
-.cat-select-container a button {
-    padding: 2rem;
+.cat-select-container::-webkit-scrollbar {
+  display: none;
 }
 
-.back-button {
-    position: absolute;
-    bottom: 1rem;
-    right: 2rem;
+.cat-select-container .cat-button {
+  all: unset;
+  width: 37%;
+  min-height: 140px;
+  height: auto;
+  display: flex;
+  padding: 14.532px 10.899px 10.899px 10.899px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-radius: 9.083px;
+  border: 2px solid transparent;
 }
 
-.back-button button {
-    padding: 1rem;
-    border-radius: 1rem;
+.cat-select-container .cat-button .info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  align-self: stretch;
+}
+
+.cat-select-container .cat-button .info-container h4 {
+  margin: 0;
+  /* color: #012e40; */
+  /* font-family: Roboto; */
+  /* font-size: 14px; */
+  font-style: normal;
+  font-weight: 600;
+  line-height: 17.5px;
+}
+
+.cat-select-container .cat-button .info-container p {
+  margin: 0;
+  color: #636c6e;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px;
+}
+
+.cat-select-container .cat-one {
+  border-radius: 9.083px;
+  background: #c9e4e4;
+}
+.cat-select-container .cat-two {
+  border-radius: 9.109px;
+  background: #eedcd1;
+}
+.cat-select-container .cat-three {
+  border-radius: 9.083px;
+  background: #eedcd1;
+}
+.cat-select-container .cat-four {
+  border-radius: 9.109px;
+  background: #fde6c4;
+}
+.cat-select-container .cat-five {
+  border-radius: 9.083px;
+  background: #fde6c4;
+}
+.cat-select-container .cat-six {
+  border-radius: 9.109px;
+  background: #c9e4e4;
+}
+
+.cat-select-container .cat-button.active {
+  border-radius: 0.4rem;
+  border: 2px solid black;
+}
+
+/* .cat-select-container button img {
+  width: 128px;
+  height: 131px;
+} */
+
+.nav-bar-cat {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 390px) {
+  .nav-bar-cat {
+    width: 380px;
+  }
+}
+
+@media (min-height: 800px) {
+  .cat-select-container {
+    height: 85%;
+  }
+}
+
+.nav-bar-cat .continue-button {
+  margin: 0.5rem;
+  padding: 0px 16px;
+  border-radius: 2rem;
+  height: 48px;
+  border-width: 1px;
+  background-color: #012e40;
+  color: white;
+  font-size: 16px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.nav-bar-cat .back-button {
+  margin: 0.5rem;
+  border-radius: 2rem;
+  width: 102px;
+  height: 48px;
+  border-width: 0px;
+  background-color: transparent;
+  color: #b1b2b2;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.idk-button {
+  margin-top: 0.3rem;
+  margin-bottom: 85px;
+  border-radius: 2rem;
+  width: 250px;
+  height: 40px;
+  border-width: 1px;
+  background-color: white;
+  color: #012e40;
+  font-size: 16px;
+  letter-spacing: 1px;
 }

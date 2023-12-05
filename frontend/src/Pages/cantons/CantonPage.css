@@ -1,0 +1,99 @@
+.canton-select-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 0.2rem;
+  gap: 1rem;
+  height: 65%;
+  overflow-y: scroll;
+}
+
+.canton-select-container::-webkit-scrollbar {
+  display: none;
+}
+
+.canton-select-container button {
+  width: 215px;
+  height: 48px;
+  border-radius: 2rem;
+  border-style: solid;
+  transition: all ease-in-out 0.2s;
+  border-width: 1px;
+  border-color: #a7c5c5;
+  flex-shrink: 0;
+}
+
+.canton-select-container button span {
+  color: black;
+}
+
+.canton-select-container button:active {
+  background-color: #a7c5c5;
+}
+
+.canton-select-container button:last-child {
+  margin-bottom: 2rem;
+}
+
+.canton-select-container button.active {
+  background-color: #a7c5c5;
+}
+
+.options-container {
+  position: relative;
+  max-height: 80%;
+  width: 100%;
+}
+
+.nav-bar-canton {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 1rem;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 390px) {
+  .nav-bar-canton {
+    width: 380px;
+  }
+  .options-container {
+    max-width: 400px;
+  }
+}
+
+@media (min-height: 700px) {
+  .canton-select-container {
+    height: 70%;
+  }
+}
+
+.nav-bar-canton .continue-button {
+  margin: 0.5rem;
+  padding: 0px 16px;
+  border-radius: 2rem;
+  height: 48px;
+  border-width: 1px;
+  background-color: #012e40;
+  color: white;
+  font-size: 16px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.nav-bar-canton .back-button {
+  margin: 0.5rem;
+  border-radius: 2rem;
+  width: 102px;
+  height: 48px;
+  border-width: 0px;
+  background-color: transparent;
+  color: #b1b2b2;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}

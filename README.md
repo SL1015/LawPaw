@@ -1,22 +1,23 @@
 # [Hack n Lead](https://womenplusplus.ch/hacknlead)
 
-===
-## Run the backend
+===  
+Backend instructions  
+1. Open terminal in LawPaw project  
+  > cd backend  
+  > docker compose up -d  
+  > docker compose exec ollama ollama run mistral  
+  > docker compose logs -f  
+2. Manually add snapshots into qdrant (TODO: trying to automate it)  
 
-1. Install packages in requiremens.txt
-2. Open the project in VSCode, open the terminal and run .venv\Scripts\activate
-3. Make sure your Qdrant up and running
-4. Run in the terminal: flask --app flaskapp run --debug to start the app
-
-## API call
-Endpoint: http://127.0.0.1:5000/chatbot  
-POST  
-DATA FORMAT:  
-{  
-    "message":"How long is the maternity leave?",  
-    "lang" : "de"  
-}  
-
+===  
+Frontend instructions  
+1. Open terminal in LawPaw project  
+  > cd frontend  
+  > mv package-lock.txt package.json  
+  > mv package.txt package.json  
+  > npm install  
+  > npm start   
+2. The application will be launched at [http://localhost:3000](http://localhost:3000)
 
 ## Steps
 

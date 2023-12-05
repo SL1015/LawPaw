@@ -1,15 +1,44 @@
-import React, { useRef } from "react";
-import { AiOutlineSend } from "react-icons/ai";
+import React, { useEffect, useRef, useState } from "react";
 import "./ChatInput.css";
+import SendBtn from "./Images/icons/send.svg";
+import SendBtnInactive from "./Images/icons/send-inactive.svg";
 
-const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit }) => {
+const ChatInput = ({
+  message,
+  textareaHeight,
+  onTextareaChange,
+  onSubmit,
+  Language,
+  isLoading
+}) => {
   const myFormRef = useRef(null);
+  const [isMessageEmpty, setIsMessageEmpty] = useState(true);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    setIsMessageEmpty(!message.trim());
+  }, [message]);
+
+  useEffect(() => {
+    const onTouchStart = () => setIsTouchDevice(true);
+    window.addEventListener("touchstart", onTouchStart);
+
+    return () => window.removeEventListener("touchstart", onTouchStart);
+  }, []);
 
   const onEnterPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey && !isTouchDevice) {
       e.preventDefault();
-      myFormRef.current.requestSubmit();
+      if (!isMessageEmpty) {
+        myFormRef.current.requestSubmit();
+      }
     }
+  };
+
+  const placeholders = {
+    en: "Ask your LawPaw...",
+    de: "Fragen sie ihren LawPaw...",
+    fr: "Demandez à votre LawPaw...",
   };
 
   return (
@@ -21,13 +50,16 @@ const ChatInput = ({ message, textareaHeight, onTextareaChange, onSubmit }) => {
           rows="1"
           cols="50"
           name="input-msg"
-          placeholder="Send a message..."
+          placeholder={placeholders[Language]}
           value={message}
           onChange={onTextareaChange}
           onKeyDown={onEnterPress}
         ></textarea>
         <button type="submit">
-          <AiOutlineSend />
+          <img
+            src={isMessageEmpty || isLoading ? SendBtnInactive : SendBtn}
+            alt="Send Message But"
+          />
         </button>
       </form>
     </div>

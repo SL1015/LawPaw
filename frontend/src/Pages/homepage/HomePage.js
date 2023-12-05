@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import GBlogo from "../../components/Images/GB.png"
+import CHlogo from "../../components/Images/CH.png"
+import FRlogo from "../../components/Images/FR.png"
+import FlipAlert from "../../components/FlipAlert";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -8,30 +12,56 @@ const HomePage = () => {
 
   const handleLanguageClick = (language) => {
     setSelectedLanguage(language);
+    // console.log(selectedLanguage);
   };
 
-  const handleNavigateClick = (canton) => {
-    navigate(`/${selectedLanguage}/${canton}`);
+  const handleNavigateClick = () => {
+    navigate(`/${selectedLanguage}`);
   };
+
+  const navTitle = {
+    en: "Step 1: Legal Lingo",
+    de: "Schritt 1: Sprache",
+    fr: "Étape 1 : Langue" 
+  }; 
+  const pagTitleOne = {
+    en: "Choose Your",
+    de: "Wählen Sie ",
+    fr: "Choisissez" 
+  }; 
+  const pagTitleTwo = {
+    en: "Legal Lingo",
+    de: "Ihr Sprache",
+    fr: "Votre Langue" 
+  }; 
+  const subtitle = {
+    en: "Pick your language for comfy law guidance.",
+    de: "Wähle Sprache für rechtliche Beratung.",
+    fr: "Choisissez langue pour conseils juridiques." 
+  }
+  const buttonText = {
+    en: "Continue",
+    de: "Weiter",
+    fr: "Poursuivre"
+  }
 
   return (
     <>
+    <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
-          <h3>Step 1: Language</h3>
+          <h4>{navTitle[selectedLanguage]}</h4>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-one"></div>
         </div>
-        <br></br>
       </section>
       <section className="main-section">
         <div className="options-container">
           <div className="title-container">
-            <h1>Select your language</h1>
+            <h1>{pagTitleOne[selectedLanguage]}<br />{pagTitleTwo[selectedLanguage]}</h1>
             <p>
-              This will help us give you the most precise law guidance based on
-              your canton.
+            {subtitle[selectedLanguage]}
             </p>
           </div>
           <div className="lang-select-container">
@@ -39,35 +69,27 @@ const HomePage = () => {
               className={`lang-en ${selectedLanguage === "en" ? "active" : ""}`}
               onClick={() => handleLanguageClick("en")}
             >
+              <img src={GBlogo} alt="English Flag"></img>
               <span>Hello</span>
             </button>
             <button
               className={`lang-de ${selectedLanguage === "de" ? "active" : ""}`}
               onClick={() => handleLanguageClick("de")}
             >
-              <span>Hallo</span>
+            <img src={CHlogo} alt="Switzerland Flag"></img>
+              <span>Grüezi</span>
             </button>
             <button
               className={`lang-fr ${selectedLanguage === "fr" ? "active" : ""}`}
               onClick={() => handleLanguageClick("fr")}
             >
-              <span>Bonjour</span>
+            <img src={FRlogo} alt="French Flag"></img>
+              <span>Salut</span>
             </button>
           </div>
         </div>
-        {/* <div className="canton-select-container">
-          <button className="canton-VD" onClick={() => handleNavigateClick("VD")}>
-            <h2>VD</h2>
-          </button>
-          <button className="canton-zH" onClick={() => handleNavigateClick("ZH")}>
-            <h2>ZH</h2>
-          </button>
-          <button className="canton-BE" onClick={() => handleNavigateClick("BE")}>
-            <h2>BE</h2>
-          </button>
-        </div> */}
         <nav className="navigation-bar">
-          <button className="homepage-button">Continue</button>
+          <button className="homepage-button" onClick={() => handleNavigateClick({selectedLanguage})}>{buttonText[selectedLanguage]}</button>
         </nav>
       </section>
     </>
