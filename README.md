@@ -13,7 +13,7 @@ Backend instructions
 Frontend instructions  
 1. Open terminal in LawPaw project  
   > cd frontend  
-  > mv package-lock.txt package.json  
+  > mv package-lock.txt package-lock.json  
   > mv package.txt package.json  
   > npm install  
   > npm start   

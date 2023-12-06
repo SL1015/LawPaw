@@ -8,6 +8,7 @@ import FlipAlert from "../../components/FlipAlert";
 
 export default function ChatBotPage() {
   const { language, canton, category } = useParams();
+  // console.log(`Lang: ${language}, Canton: ${canton}, Cat:   ${category} `)
   return (
     <>
     <FlipAlert />

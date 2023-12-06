@@ -23,6 +23,7 @@ function LanguagePage() {
       case "fr":
         return CantonPageFR;
       default:
+        // Página padrão ou tratamento de idioma inválido
         return CantonPage;
     }
   };
