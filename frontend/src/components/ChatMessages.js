@@ -4,26 +4,6 @@ import "./ChatMessages.css";
 import botIcon from "./Images/bot.png";
 import clientIcon from "./Images/client.png";
 
-// const ChatMessages = ({ clientInput, aiBotResponse, isLoading, formSubmitted }) => {
-
-//     return (
-//       <div className="chat-messages">
-//         {formSubmitted && (
-//           <>
-//             <div className="client-inputmsg">
-//               <p>{clientInput}</p>
-//               <img src={clientIcon} alt="Client icon"/>
-//             </div>
-//             <div className="bot-response">
-//               <img src={botIcon} alt="AI icon"/>
-//               <p>{isLoading ? <LoadingSpinner /> : aiBotResponse}</p>
-//             </div>
-//           </>
-//         )}
-//       </div>
-//     );
-//   };
-
 const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
   const [displayedResponse, setDisplayedResponse] = useState("");
   const [responseIndex, setResponseIndex] = useState(0);
@@ -67,13 +47,6 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
           </div>
           <div className="bot-response">
             <img src={botIcon} alt="AI icon" />
-            {/* <p>
-              {index === botResponses.length && isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                botResponses[index]
-              )}
-            </p> */}
             <p>
               {index === botResponses.length && isLoading ? (
                 <LoadingSpinner />

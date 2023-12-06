@@ -7,14 +7,6 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
   const [selectedQuestion, setSelectedQuestion] = useState("");
   const { language } = useParams();
 
-  // const questions = [
-  //   "Can you advise on key contract considerations?",
-  //   "What remedies apply to civil wrongs?",
-  //   "Any tips for buying property?",
-  //   "Could you explain basics of child custody?",
-  //   "Can you guide me on starting a business?",
-  //   "How does the inheritance process work?",
-  // ];
 
   const questionData = {
     en: [
