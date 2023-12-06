@@ -13,8 +13,8 @@ import FlipAlert from "../../components/FlipAlert";
 
 const CategoryPageEN = () => {
   const { language, canton } = useParams();
-  console.log("Language:", language);
-  console.log("Canton:", canton);
+  // console.log("Language:", language);
+  // console.log("Canton:", canton);
   const navigate = useNavigate();
   const [selectedCat, setSelectedCat] = useState("1");
 

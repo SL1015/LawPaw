@@ -12,7 +12,7 @@ const HomePage = () => {
 
   const handleLanguageClick = (language) => {
     setSelectedLanguage(language);
-    console.log(selectedLanguage);
+    // console.log(selectedLanguage);
   };
 
   const handleNavigateClick = () => {
