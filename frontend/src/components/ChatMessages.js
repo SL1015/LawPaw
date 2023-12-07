@@ -3,11 +3,18 @@ import LoadingSpinner from "./LoadingSpinner";
 import "./ChatMessages.css";
 import botIcon from "./Images/bot.png";
 import clientIcon from "./Images/client.png";
+import Typed from "react-typed";
 
 const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
   const [displayedResponse, setDisplayedResponse] = useState("");
   const [responseIndex, setResponseIndex] = useState(0);
   const messagesEndRef = useRef(null);
+  const [botResponsesLength, setBotResponsesLength] = useState("")
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    
+  }, [botResponses, clientInputs])
 
   useEffect(() => {
     if (botResponses.length > 0 && responseIndex < botResponses.length) {
@@ -37,6 +44,10 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
     }
   }, [isLoading, responseIndex, botResponses]);
 
+  
+  
+  
+
   return (
     <div className="chat-messages">
       {clientInputs.map((clientInput, index) => (
@@ -55,11 +66,19 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
               ) : (
                 botResponses[index]
               )}
+              {/* {index === botResponses.length && isLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <Typed
+                  strings={[`${botResponses[index]}`]}
+                  typeSpeed={15}
+                />
+              )} */}
             </p>
           </div>
         </div>
       ))}
-      <div ref={messagesEndRef} />
+      <div id="anchor" ref={messagesEndRef} />
     </div>
   );
 };

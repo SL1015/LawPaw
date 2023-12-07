@@ -103,3 +103,7 @@
 .bot-response p {
   margin: 0.7rem 0;
 }
+
+.typed-cursor--blink {
+  display: none;
+}
