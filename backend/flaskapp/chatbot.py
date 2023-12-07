@@ -42,7 +42,6 @@ from urllib.parse import unquote
 
 from qdrant_client import QdrantClient
 
-'''llm model'''
 from transformers import AutoModel, AutoTokenizer
 import torch
 #device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -104,15 +103,15 @@ def search_context(query,lang,law,kanton):
     embedding_de = query_embedding(query,lang,'de')
     client = QdrantClient(host="qdrant",port=6333)
     hits_or=client.search(
-            collection_name = 'swiss-or',
-            query_vector = embedding_en,
-            limit = 3
-        )
+        collection_name = 'swiss-or',
+        query_vector = embedding_en,
+        limit = 3
+    )
     hits_de=client.search(
-            collection_name = 'swiss-de',
-            query_vector = embedding_de,
-            limit = 3
-        )
+        collection_name = 'swiss-de',
+        query_vector = embedding_de,
+        limit = 3
+    )
     if kanton != 'all':
         collection_canton = 'swiss-'+kanton
         hits_canton=client.search(
@@ -152,7 +151,7 @@ def qa_chatbot(query, lang, law, kanton):
   Base your answers exclusively on the provided top 3 articles from the law: {law}.
   If the particular law from which the articles originate is not specified, please figure it out by referring to the provided source links.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
-  The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
+  The source link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
   If an answer is not explicitly covered in the provided context, please indicate so by saying 'Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!'
   Context: {context}
   Question: {query}
