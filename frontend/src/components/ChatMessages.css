@@ -87,12 +87,12 @@
   margin-top: 0.7rem;
 }
 
-.bot-response p {
+.bot-response .botreponseSpan {
   color: #000;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 21px */
+  line-height: 18px;
   width: 80%;
   padding: 1rem;
   border-radius: 20px 20px 20px 5px;
@@ -100,8 +100,15 @@
   white-space: pre-wrap;
 }
 
-.bot-response p {
+.bot-response .botreponseSpan {
   margin: 0.7rem 0;
+}
+
+.bot-response .botreponseSpan span {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
 }
 
 .typed-cursor--blink {

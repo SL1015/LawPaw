@@ -4,12 +4,12 @@ import "./ChatMessages.css";
 import botIcon from "./Images/bot.png";
 import clientIcon from "./Images/client.png";
 import Typed from "react-typed";
+// import AutoLinkText from "react-autolink-text2";
 
 const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
   const [displayedResponse, setDisplayedResponse] = useState("");
   const [responseIndex, setResponseIndex] = useState(0);
   const messagesEndRef = useRef(null);
-  const [botResponsesLength, setBotResponsesLength] = useState("")
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -25,8 +25,8 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
         setDisplayedResponse(
           (prevResponse) => prevResponse + response[currentCharacter]
         );
-        currentCharacter++;
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        currentCharacter++;
         if (currentCharacter === response.length) {
           clearInterval(typingEffect);
           setResponseIndex(responseIndex + 1);
@@ -40,12 +40,27 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
   useEffect(() => {
     if (responseIndex === botResponses.length && isLoading) {
       setDisplayedResponse("");
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [isLoading, responseIndex, botResponses]);
 
   
-  
+  const MsgClickableLinks = (message) => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  return message.split(urlRegex).map((part, index) => {
+    if (part.match(urlRegex)) {
+      let link = part.replace(/[\])}]+$/, '');
+      return (
+        <a key={index} href={link} target="_blank" rel="noopener noreferrer">
+          {part}
+        </a>
+      );
+    } else {
+      return <span key={index}>{part}</span>;
+    }
+  });
+};
   
 
   return (
@@ -58,13 +73,17 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
           </div>
           <div className="bot-response">
             <img src={botIcon} alt="AI icon" />
-            <p>
+            <span className="botreponseSpan">
+              
               {index === botResponses.length && isLoading ? (
                 <LoadingSpinner />
               ) : index === responseIndex ? (
-                displayedResponse
+                <Typed
+                  strings={[`${botResponses[index]}`]}
+                  typeSpeed={5}
+                />
               ) : (
-                botResponses[index]
+                MsgClickableLinks(botResponses[index])
               )}
               {/* {index === botResponses.length && isLoading ? (
                 <LoadingSpinner />
@@ -74,7 +93,7 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
                   typeSpeed={15}
                 />
               )} */}
-            </p>
+            </span>
           </div>
         </div>
       ))}
