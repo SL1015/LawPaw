@@ -38,16 +38,33 @@ const ChatBox = ({ Language, Canton, Category }) => {
     }
   };
 
+  // const handleTextareaChange = (event) => {
+  //   setMessage(event.target.value);
+  //   const currentHeight = event.target.style.height;
+  //   const scrollHeight = event.target.scrollHeight + "px";
+  //   if (scrollHeight !== currentHeight) {
+  //     if (currentHeight >= "200px") {
+  //       event.preventDefault();
+  //       setTextareaHeight(scrollHeight);
+  //     } else {
+  //       event.preventDefault();
+  //       setTextareaHeight(currentHeight);
+  //     }
+  //   }
+  // };
+
   const handleTextareaChange = (event) => {
     setMessage(event.target.value);
-    const currentHeight = event.target.style.height;
-    const scrollHeight = event.target.scrollHeight + "px";
-    if (scrollHeight !== currentHeight) {
-      if (currentHeight >= "200px") {
-        setTextareaHeight(scrollHeight);
-      } else {
-        setTextareaHeight("150px");
-      }
+    const textarea = event.target;  
+    textarea.style.height = '0';  
+    const newHeight = textarea.scrollHeight;  
+    const maxHeight = 110;
+    if (newHeight > maxHeight) {
+      textarea.style.height = `${maxHeight}px`;
+      setTextareaHeight(`${maxHeight}px`);
+    } else {
+      textarea.style.height = `${newHeight}px`;
+      setTextareaHeight(`${newHeight}px`);
     }
   };
 
@@ -69,6 +86,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
           onTextareaChange={handleTextareaChange}
           onSubmit={handleSubmit}
           Language={Language}
+          isLoading={isLoading}
         />
       </section>
       <SelectQuestions

@@ -3,6 +3,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import "./ChatMessages.css";
 import botIcon from "./Images/bot.png";
 import clientIcon from "./Images/client.png";
+// import clientIcon from "./Images/Ellipse.png";
 import Typed from "react-typed";
 // import AutoLinkText from "react-autolink-text2";
 
@@ -13,8 +14,7 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    
-  }, [botResponses, clientInputs])
+  }, [botResponses, clientInputs]);
 
   useEffect(() => {
     if (botResponses.length > 0 && responseIndex < botResponses.length) {
@@ -25,8 +25,8 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
         setDisplayedResponse(
           (prevResponse) => prevResponse + response[currentCharacter]
         );
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         currentCharacter++;
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         if (currentCharacter === response.length) {
           clearInterval(typingEffect);
           setResponseIndex(responseIndex + 1);
@@ -44,24 +44,23 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
     }
   }, [isLoading, responseIndex, botResponses]);
 
-  
   const MsgClickableLinks = (message) => {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
 
-  return message.split(urlRegex).map((part, index) => {
-    if (part.match(urlRegex)) {
-      let link = part.replace(/[\])}]+$/, '');
-      return (
-        <a key={index} href={link} target="_blank" rel="noopener noreferrer">
-          {part}
-        </a>
-      );
-    } else {
-      return <span key={index}>{part}</span>;
-    }
-  });
-};
-  
+    return message.split(urlRegex).map((part, index) => {
+      if (part.match(urlRegex)) {
+        let link = part.replace(/[\])}]+$/, "");
+        let last = part.slice(-1);
+        return (
+          <a key={index} href={link} target="_blank" rel="noopener noreferrer">
+            Link🔗{last}
+          </a>
+        );
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
 
   return (
     <div className="chat-messages">
@@ -74,14 +73,10 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
           <div className="bot-response">
             <img src={botIcon} alt="AI icon" />
             <span className="botreponseSpan">
-              
               {index === botResponses.length && isLoading ? (
                 <LoadingSpinner />
               ) : index === responseIndex ? (
-                <Typed
-                  strings={[`${botResponses[index]}`]}
-                  typeSpeed={5}
-                />
+                <Typed strings={[`${botResponses[index]}`]} typeSpeed={5} />
               ) : (
                 MsgClickableLinks(botResponses[index])
               )}

@@ -1,7 +1,7 @@
 .chat-messages {
   min-height: 300px;
   height: 100%;
-  margin: 0.5rem 0 85px;
+  margin: 0.5rem 0 0;
   border-color: #f3eeeaad;
   padding: 1rem;
   overflow-y: auto;
@@ -17,12 +17,12 @@
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-  background: #776b5dab;
+  background: #ededed;
   border-radius: 11rem;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-  background: #776b5d;
+  background: #012e40;
 }
 
 ::-webkit-scrollbar-track-piece:end {
@@ -109,6 +109,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 18px;
+  word-break: break-word;
 }
 
 .typed-cursor--blink {

@@ -9,7 +9,7 @@ const ChatInput = ({
   onTextareaChange,
   onSubmit,
   Language,
-  isLoading
+  isLoading,
 }) => {
   const myFormRef = useRef(null);
   const [isMessageEmpty, setIsMessageEmpty] = useState(true);
@@ -56,10 +56,47 @@ const ChatInput = ({
           onKeyDown={onEnterPress}
         ></textarea>
         <button type="submit">
-          <img
-            src={isMessageEmpty || isLoading ? SendBtnInactive : SendBtn}
+          {/* <img
+            // src={isMessageEmpty || isLoading ? SendBtnInactive : SendBtn}
+            src={SendBtn}
             alt="Send Message But"
-          />
+          /> */}
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="29"
+            height="30"
+            viewBox="0 0 29 30"
+            fill="none"
+            className="active"
+          >
+            <g clip-path="url(#clip0_232_1702)">
+              <path
+                d="M26.1429 14.9658L13.1793 14.9658"
+                stroke={isMessageEmpty || isLoading ? "#DCE3E4" : "#012E40" }
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10.2331 22.6261L26.143 14.9658L10.2331 7.30547L13.1794 14.9658L10.2331 22.6261Z"
+                stroke={isMessageEmpty || isLoading ? "#DCE3E4" : "#012E40" }
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_232_1702">
+                <rect
+                  width="20"
+                  height="20"
+                  fill="white"
+                  transform="translate(14.3579 0.823654) rotate(45)"
+                />
+              </clipPath>
+            </defs>
+          </svg>
         </button>
       </form>
     </div>
