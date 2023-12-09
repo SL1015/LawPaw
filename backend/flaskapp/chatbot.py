@@ -42,7 +42,6 @@ from urllib.parse import unquote
 
 from qdrant_client import QdrantClient
 
-'''llm model'''
 from transformers import AutoModel, AutoTokenizer
 import torch
 #device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -84,9 +83,7 @@ def doc_to_rscope(docs):
     rscope += content + "\n\n"
   return rscope,links
 
-
-def get_top_results(hits1,hits2):
-  combined_lst = hits1 + hits2
+def get_top_results(combined_lst):
   sorted_lst = sorted(combined_lst,key = lambda x:x.score,reverse=True)
   return sorted_lst[:3]
 
@@ -105,42 +102,37 @@ def search_context(query,lang,law,kanton):
     embedding_en = query_embedding(query,lang,'en')
     embedding_de = query_embedding(query,lang,'de')
     client = QdrantClient(host="qdrant",port=6333)
+    hits_or=client.search(
+        collection_name = 'swiss-or',
+        query_vector = embedding_en,
+        limit = 3
+    )
+    hits_de=client.search(
+        collection_name = 'swiss-de',
+        query_vector = embedding_de,
+        limit = 3
+    )
     if kanton != 'all':
-        if law != 'OR':
-            query_vecs_kanton = embedding_de
-            query_vecs_gen = embedding_de
-            collection_canton = 'swiss-'+kanton
-            collection_gen = 'swiss-de'
-        else:    
-            query_vecs_kanton = embedding_de
-            query_vecs_gen = embedding_en
-            collection_canton = 'swiss-'+kanton
-            collection_gen = 'swiss-or'
-        current_app.logger.info(collection_gen)
-        hits1=client.search(
-            collection_name=collection_canton,
-            query_vector = query_vecs_kanton,
+        collection_canton = 'swiss-'+kanton
+        hits_canton=client.search(
+            collection_name = collection_canton,
+            query_vector = embedding_de,
             limit=3
         )
-        hits2=client.search(
-            collection_name = collection_gen,
-            query_vector = query_vecs_gen,
-            limit = 3
-        )
-        hits = get_top_results(hits1,hits2)
-            
+        if law == 'ZGB':
+            combined_lst = hits_canton + hits_de
+        elif law == 'OR':
+            combined_lst = hits_canton + hits_or
+        else:
+            combined_lst = hits_canton + hits_or + hits_de                
     else:
         if law =='OR':
-            collection = 'swiss-or'
-            query_vecs = embedding_en
+            return hits_or
+        elif law == 'ZGB':
+            return hits_de
         else:
-            collection = 'swiss-de'
-            query_vecs = embedding_de
-        hits=client.search(
-            collection_name=collection,
-            query_vector = query_vecs,
-            limit=3
-        )
+            combined_lst = hits_or + hits_de
+    hits = get_top_results(combined_lst)
     return hits
 
 import openai
@@ -157,8 +149,9 @@ def qa_chatbot(query, lang, law, kanton):
   You are a legal assistant expert on the Swiss Private Law.
   Answer questions related to contract law, employment regulations, corporate obligations, personality rights, family law (marriage, divorce, guardianship), inheritance law, and property law.
   Base your answers exclusively on the provided top 3 articles from the law: {law}.
+  If the particular law from which the articles originate is not specified, please figure it out by referring to the provided source links.
   Please provide a summary of the relevant article(s), along with the source link(s) for reference.
-  The souce link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
+  The source link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
   If an answer is not explicitly covered in the provided context, please indicate so by saying 'Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!'
   Context: {context}
   Question: {query}
