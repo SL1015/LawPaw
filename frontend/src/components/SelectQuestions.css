@@ -6,6 +6,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+  height: 83%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,12 +33,12 @@
 
 .questions-container ul {
   list-style-type: none;
-  margin: 1rem 0;
+  margin: 3rem 1rem;
   padding: 0;
 }
 
 .questions-container ul li {
-  margin: 0.5rem 0;
+  margin: 0.6rem 0;
 }
 
 .questions-container ul li button {
@@ -59,5 +60,23 @@
 
 .questions-container ul li button.active {
   background: #dce3e4;
+  /* background: conic-gradient(
+    from 176deg at 50.15% 50.15%,
+    rgba(225, 183, 159, 0.5) 7.117450162768364deg,
+    rgba(167, 197, 197, 0.5) 163.1180477142334deg,
+    rgba(249, 170, 52, 0.5) 276.7651963233948deg
+  ); */
   color: #012e40;
+}
+
+.questions-container span {
+  position: fixed;
+  bottom: 110px;
+  color: #7e8a8c;
+  text-align: center;
+  font-family: Lato;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
 }

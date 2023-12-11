@@ -132,7 +132,7 @@ const CategoryPageEN = () => {
               <img src={Cat6} alt="Question mark icon" />
               <div className="info-container">
                 <h4>Others</h4>
-                <p>No matter where your question fall! your buddy will handle.</p>
+                <p>No matter the legal category, your buddy's here to help!</p>
               </div>
             </button>
             {/* <ScrollDownIcon /> */}
