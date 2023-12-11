@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChatInput.css";
-import SendBtn from "./Images/icons/send.svg";
-import SendBtnInactive from "./Images/icons/send-inactive.svg";
+// import SendBtn from "./Images/icons/send.svg";
+// import SendBtnInactive from "./Images/icons/send-inactive.svg";
 
 const ChatInput = ({
   message,
@@ -73,14 +73,14 @@ const ChatInput = ({
             <g clip-path="url(#clip0_232_1702)">
               <path
                 d="M26.1429 14.9658L13.1793 14.9658"
-                stroke={isMessageEmpty || isLoading ? "#DCE3E4" : "#012E40" }
+                stroke={isMessageEmpty || isLoading ? "#7e8a8c" : "#012E40" }
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
               <path
                 d="M10.2331 22.6261L26.143 14.9658L10.2331 7.30547L13.1794 14.9658L10.2331 22.6261Z"
-                stroke={isMessageEmpty || isLoading ? "#DCE3E4" : "#012E40" }
+                stroke={isMessageEmpty || isLoading ? "#7e8a8c" : "#012E40" }
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"

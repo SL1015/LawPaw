@@ -1,5 +1,9 @@
 #root {
   height: 100svh;
+  background-image: url("./components/Images/Location.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .flip-alert {
@@ -33,6 +37,7 @@
 }
 
 .main-nav {
+  background-color: white;
   position: relative;
   display: flex;
   align-self: stretch;

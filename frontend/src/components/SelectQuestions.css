@@ -1,10 +1,10 @@
 .questions-container {
-  position: absolute; 
-  left: 0; 
-  right: 0; 
+  position: absolute;
+  left: 0;
+  right: 0;
   top: 1rem;
-  margin-left: auto; 
-  margin-right: auto; 
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,17 @@
 }
 
 .questions-logo {
-  width: 90px;
+  margin-top: 4rem;
+  width: 60px;
+}
+
+.questions-container p {
+  color: #7e8a8c;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%; /* 17.5px */
 }
 
 .questions-container ul {
@@ -48,6 +58,6 @@
 }
 
 .questions-container ul li button.active {
-  background: #DCE3E4;
-  color: #012E40;
+  background: #dce3e4;
+  color: #012e40;
 }

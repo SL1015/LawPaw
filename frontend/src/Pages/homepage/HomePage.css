@@ -4,10 +4,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-image: url("../../components/Images/Location.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   height: 89svh;
 }
 

@@ -7,14 +7,24 @@ export const sendMessageToAPI = async (message, language, canton, category) => {
     } else if (category === "4" || category === "5") {
       categoryFilter = "ZGB";
     }
-    // console.log(`Message: ${message}, Lang: ${language}, Canton: ${canton}, Cat: ${category}, Law: ${categoryFilter} `);
+
+    let languageFilter = "";
+    if(language === "en") {
+      languageFilter = "EN-GB"
+    } else if (language === "de") {
+      languageFilter = "DE"
+    } else if (language === "fr") {
+      languageFilter = "FR"
+    }
+
+    console.log(`Message: ${message}, Lang: ${languageFilter}, Canton: ${canton}, Cat: ${category}, Law: ${categoryFilter} `);
   
-    const response = await axios.post("http://127.0.0.1:5000/chatbot",
+    const response = await axios.post("http://89.217.241.28:5000/chatbot",
     {
-      "message": `"${message}"`,
-      "lang": `"${language}"`,
-      "kanton": `"${canton}"`,
-      "law": `"${categoryFilter}"`
+      "message": message,
+      "lang": languageFilter,
+      "kanton": canton,
+      "law": categoryFilter
     });
     return response.data;
   } catch (error) {

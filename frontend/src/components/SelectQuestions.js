@@ -40,6 +40,7 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
   return (
     <div className={`questions-container ${submitted ? "submitted" : ""}`} >
       <img className="questions-logo" src={lawLogo} alt="LawPaw Logo" />
+      <p>How can I help you today?</p>
       <ul>
         {questions.map((question, index) => (
           <li key={index}>

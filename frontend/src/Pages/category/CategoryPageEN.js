@@ -129,10 +129,10 @@ const CategoryPageEN = () => {
               }`}
               onClick={() => handleCatClick("6")}
             >
-              <img src={Cat6} alt="Tort icon" />
+              <img src={Cat6} alt="Question mark icon" />
               <div className="info-container">
-                <h4>Tort law</h4>
-                <p>Friendly advice on civil wrongs, injuries, and remedies.</p>
+                <h4>Others</h4>
+                <p>No matter where your question fall! your buddy will handle.</p>
               </div>
             </button>
             {/* <ScrollDownIcon /> */}

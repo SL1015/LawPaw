@@ -42,7 +42,7 @@
 
 .options-container {
   position: relative;
-  max-height: 80%;
+  max-height: 82%;
   width: 100%;
 }
 
@@ -51,7 +51,6 @@
   bottom: 0;
   width: 100%;
   margin-bottom: 1rem;
-  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
