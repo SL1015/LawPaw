@@ -36,7 +36,7 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
   // };
 
   const questionData = {
-    en: {
+    en: { // English
       1: [ // Contract
         "What are the three “written” forms of contract?",
         "What can I do if I don't agree with the terms of the contract?",
@@ -68,7 +68,7 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
         "When can I contest rent?",
       ],
     },
-    de: {
+    de: { // German
       1: [ // Contract
         "What are the three “written” forms of contract?",
         "What can I do if I don't agree with the terms of the contract?",
@@ -100,7 +100,7 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
         "When can I contest rent?",
       ],
     },
-    fr: {
+    fr: { // French
       1: [ // Contract
         "What are the three “written” forms of contract?",
         "What can I do if I don't agree with the terms of the contract?",
