@@ -8,7 +8,8 @@ import Typed from "react-typed";
 // import AutoLinkText from "react-autolink-text2";
 
 const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
-  const [displayedResponse, setDisplayedResponse] = useState("");
+  // eslint-disable-next-line
+  const [displayedResponse, setDisplayedResponse] = useState(""); 
   const [responseIndex, setResponseIndex] = useState(0);
   const messagesEndRef = useRef(null);
 

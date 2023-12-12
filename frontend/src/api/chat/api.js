@@ -22,7 +22,7 @@ export const sendMessageToAPI = async (message, language, canton, category) => {
     const response = await axios.post("http://localhost:5000/chatbot",
     {
       "message": message,
-      "lang": languageFilter,
+      "lang": language,
       "kanton": canton,
       "law": categoryFilter
     });

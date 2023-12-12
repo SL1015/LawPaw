@@ -1,47 +1,194 @@
 .messages-container {
-    border-style: solid;
+  border-style: solid;
 }
 
 .input-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    font-size: 1.5rem;
-    margin: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 1.5rem;
+  margin: 1rem;
 }
 
 .botpage-nav {
-  background-color: white ;
-  border-bottom: 1px solid var(--neutral-n-300, #D2D3D3);
+  background-color: white;
+  border-bottom: 1px solid var(--neutral-n-300, #d2d3d3);
   height: 71px;
 }
 
 .botpage-nav .progress-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-    
-  .botpage-nav .progress-title h4 {
-    margin: 2rem 1rem 1rem;
-    color: #012E40;
-  
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+.botpage-nav .progress-title h4 {
+  color: #012e40;
+}
 
-  .botpage-nav .progress-title span {
-    position: absolute;
-    left: 1rem;
-    top: 2.2rem;
-    color: #012E40;
-  }
+.botpage-nav .progress-title span {
+  color: #012e40;
+}
 
-  .chatbox-section {
-    position: relative;
-    width: 100%;
-    height: 89svh;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.botpage-nav .progress-title img {
+  cursor: pointer;
+}
+
+.chatbox-section {
+  position: relative;
+  width: 100%;
+  height: 89svh;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Settings container */
+
+.settings-container {
+  position: absolute;
+  overflow-y: auto;
+  top: 0;
+  z-index: 9;
+  height: 100svh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  transform: translateX(200%);
+  transition: all ease-in-out 0.4s;
+}
+
+.settings-container::-webkit-scrollbar {
+  display: none;
+}
+
+.settings-container.active {
+  transform: translateX(0);
+}
+
+.settings-container .settings-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid var(--neutral-n-300, #d2d3d3);
+  height: 71px;
+}
+
+.settings-container .settings-nav * {
+  margin: 40px 24px auto;
+}
+
+.settings-container .settings-nav h4 {
+  color: #363939;
+  font-family: Ubuntu;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22.5px;
+}
+
+.settings-container .settings-nav span {
+  color: #434545;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17.5px;
+}
+
+.settings-container .settings-nav img {
+  cursor: pointer;
+}
+
+.settings-container .settings-nav span {
+  cursor: pointer;
+}
+
+
+.settings-container .settings-options-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-container .settings-options-container .options-div {
+  display: flex;
+  width: auto;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 0 0 20px 0;
+  margin: 0 25px;
+  border-bottom: 1px solid var(--neutral-n-300, #d2d3d3);
+  background: var(--neutral-white, #fff);
+}
+
+.settings-container .settings-options-container .options-div h3 {
+  color: #363939;
+  font-family: Ubuntu;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22.5px;
+}
+
+.settings-container .settings-options-container .settings-canton span {
+  margin: 1rem 0 0 0.5rem;
+  cursor: pointer;
+  color: #1f2223;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+.settings-container
+  .settings-options-container
+  .options-div
+  .settings-button-container
+  button {
+  all: unset;
+  height: 36px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid var(--neutral-n-300, #d2d3d3);
+  color: #363939;
+  text-align: center;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17.5px;
+}
+
+.settings-container
+  .settings-options-container
+  .options-div
+  .settings-button-container
+  button.active {
+  background: conic-gradient(
+    from 176deg at 50.15% 50.15%,
+    rgba(225, 183, 159, 0.5) 7.117450162768364deg,
+    rgba(167, 197, 197, 0.5) 163.1180477142334deg,
+    rgba(249, 170, 52, 0.5) 276.7651963233948deg
+  );
+}
+
+.settings-container
+  .settings-options-container
+  .options-div
+  .settings-button-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
