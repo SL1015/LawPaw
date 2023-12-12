@@ -1,4 +1,5 @@
 import os
+from http.client import HTTPException
 from flask import Flask, request, jsonify, Blueprint, current_app
 from flask_cors import CORS
 from langchain.llms import Ollama
@@ -204,3 +205,12 @@ def getResponse():
         return jsonify({"error": "No message provided"}), 400
     response = qa_chatbot(user_message, lang, law, kanton)
     return response
+
+    
+@chatbot_blueprint.errorhandler(Exception)
+def handle_exception(e):
+# pass through HTTP errors
+    current_app.logger.exception(e)
+    if isinstance(e, HTTPException):
+        return e
+    return jsonify(error=str(e)), 500
