@@ -23,12 +23,5 @@ def create_app():
     def hello():
         return 'Hello, World!'
 
-    @app.errorhandler(Exception)
-    def handle_exception(e):
-    # pass through HTTP errors
-        if isinstance(e, HTTPException):
-            return e
-    # now you're handling non-HTTP exceptions only
-        return jsonify(error=str(e)), 500
     
     return app

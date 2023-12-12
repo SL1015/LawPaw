@@ -1,4 +1,5 @@
 import os
+from http.client import HTTPException
 from flask import Flask, request, jsonify, Blueprint, current_app
 from flask_cors import CORS
 from langchain.llms import Ollama
@@ -58,11 +59,11 @@ model_de = AutoModel.from_pretrained("thenlper/gte-base")
 from torch import Tensor
 def average_pool(last_hidden_states: Tensor,
                  attention_mask: Tensor) -> Tensor:
-    last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
-    return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
+  last_hidden = last_hidden_states.masked_fill(~attention_mask[..., None].bool(), 0.0)
+  return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
 
 def embedding(text,lang):
-    if lang == 'en':
+    if lang == 'EN-GB':
         batch_dict = tokenizer_en(text, max_length=512, padding=True, truncation=True, return_tensors='pt')
         outputs = model_en(**batch_dict)
     else:
@@ -74,102 +75,104 @@ def embedding(text,lang):
     return embeddings
 
 def doc_to_rscope(docs):
-  rscope = ""
-  links = []
-  for doc in docs:
-    content = doc.payload['content']
-    links.append(doc.payload['link'])
-    #current_app.logger.info(test)
-    rscope += content + "\n\n"
-  return rscope,links
+    rscope = ""
+    links = []
+    for doc in docs:
+        content = doc.payload['content']
+        links.append(doc.payload['link'])
+        '''
+        if not doc.payload['link']:
+            print('test')
+            print(content)'''
+        rscope += content + "\n\n"
+    current_app.logger.debug(links)
+    return rscope, links
 
-def get_top_results(combined_lst):
-  sorted_lst = sorted(combined_lst,key = lambda x:x.score,reverse=True)
-  return sorted_lst[:3]
+def get_top_results(hit_lst):
+    sorted_Lst = sorted(hit_lst, key=lambda x:x.score,reverse = True)
+    return sorted_Lst[:4]
 
 def query_embedding(query,lang,embedding_lang):
     if lang != embedding_lang:
-        target_lang = 'EN-GB' if embedding_lang =='en' else 'DE'
-        query = translator.translate_text(query,target_lang=target_lang).text
-        current_app.logger.info("targetlang:"+ target_lang)
-        current_app.logger.info(query)
-        query_embedding = embedding(query,embedding_lang)
-    else:
-        query_embedding = embedding(query,lang)
-    return query_embedding
+        query = translator.translate_text(query,target_lang=embedding_lang).text
+    return embedding(query,embedding_lang)
+    
+    
+def search_db(client,query_vecs,collection):
+    hits=client.search(
+            collection_name=collection,
+            query_vector = query_vecs,
+            limit=4
+        )
+    return hits
 
 def search_context(query,lang,law,kanton):
-    embedding_en = query_embedding(query,lang,'en')
-    embedding_de = query_embedding(query,lang,'de')
-    client = QdrantClient(host="qdrant",port=6333)
-    hits_or=client.search(
-        collection_name = 'swiss-or',
-        query_vector = embedding_en,
-        limit = 3
-    )
-    hits_de=client.search(
-        collection_name = 'swiss-de',
-        query_vector = embedding_de,
-        limit = 3
-    )
+    hit_lst = []
+    client = QdrantClient(url="http://qdrant:6333")
     if kanton != 'all':
-        collection_canton = 'swiss-'+kanton
-        hits_canton=client.search(
-            collection_name = collection_canton,
-            query_vector = embedding_de,
-            limit=3
-        )
-        if law == 'ZGB':
-            combined_lst = hits_canton + hits_de
-        elif law == 'OR':
-            combined_lst = hits_canton + hits_or
-        else:
-            combined_lst = hits_canton + hits_or + hits_de                
+        query_vecs_de = query_embedding(query,lang,'DE')
+        collection1 = 'swiss-'+kanton
+        hits = search_db(client,query_vecs_de,collection1)
+        hit_lst+=hits
+    if law == 'OR':
+        query_vecs_en = query_embedding(query,lang,'EN-GB')
+        hits = search_db(client,query_vecs_en,'swiss-or')
+        hit_lst+=hits
+    elif law == 'ZGB':
+        query_vecs_de = query_embedding(query,lang,'DE')
+        hits = search_db(client,query_vecs_de,'swiss-de')
+        hit_lst+=hits
     else:
-        if law =='OR':
-            return hits_or
-        elif law == 'ZGB':
-            return hits_de
-        else:
-            combined_lst = hits_or + hits_de
-    hits = get_top_results(combined_lst)
-    return hits
+        query_vecs_en = query_embedding(query,lang,'EN-GB')
+        hits1 = search_db(client,query_vecs_en,'swiss-or')
+        query_vecs_de = query_embedding(query,lang,'DE')
+        hits2 = search_db(client,query_vecs_de,'swiss-de')
+        hit_lst+=hits1
+        hit_lst+=hits2
+    print(len(hit_lst))
+    result = get_top_results(hit_lst)
+    return result
 
 import openai
 key_openai = json.load(open("openai_credential.json"))
 os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
 
-def qa_chatbot(query, lang, law, kanton):
-  context_raw = search_context(query, lang, law, kanton)
-  current_app.logger.info(context_raw)
+def qa_chatbot(query, lang, law,kanton):
+  context_raw = search_context(query, lang,law,kanton)
+  for hit in context_raw:
+      current_app.logger.debug(hit.score)
   context,links = doc_to_rscope(context_raw)
-  memory = ConversationBufferMemory(k=10, memory_key='chat_history')
-  ollama = ChatOllama(base_url='http://ollama:11434', model="mistral", temperature=0.1)
-  chat_text = """
+  memory = ConversationBufferMemory(k=10,memory_key='chat_history')
+  chat_text = f"""
+
   You are a legal assistant expert on the Swiss Private Law.
-  Answer questions related to contract law, employment regulations, corporate obligations, personality rights, family law (marriage, divorce, guardianship), inheritance law, and property law.
-  Base your answers exclusively on the provided top 3 articles from the law: {law}.
-  If the particular law from which the articles originate is not specified, please figure it out by referring to the provided source links.
-  Please provide a summary of the relevant article(s), along with the source link(s) for reference.
-  The source link(s) should be from the following collection {source_links}, if none of the links works, just don't provide the information.
-  If an answer is not explicitly covered in the provided context, please indicate so by saying 'Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!'
+  Summarize your answer exclusively based on the context provided and do the translation as needed. For example, the query can be in English but the context provided can be in German. In this case, translate the context to English and see if an answer can be summarized or provided.
+  If an answer can be found in the provided context, please provide a summary of the relevant article(s), along with the source link(s) for reference. The souce link(s) should be from the following collection {links}. If there's nothing in the collection, do not provide the link information.
+  The relevant articles are originated from law: {law}. If the source law is not specified, please figure it out by referring to the provided source links.
+  If the question is not covered by the provided context, please indicate so by saying only the following sentence: 'Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!' and no more. This message should be in the same language as the question.
+  
   Context: {context}
   Question: {query}
+
   """
-  llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
+  #print(context)
   prompt_template = ChatPromptTemplate.from_template(chat_text)
-  chatgpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
-  ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
-  #answer = ollama_llm_chain.run(context=chat_text, query=query,source_links=links)
-  answer_gpt = chatgpt_llm_chain.run(context=chat_text, query=query, source_links=links, law=law)
-  if lang != ('en' or 'de'):
+  #ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
+  gpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
+  # answer = ollama_llm_chain.run(context=chat_text,
+  #                           query=query,source_links=links)
+
+  answer_gpt = gpt_llm_chain.run(context=chat_text, query=query, source_links=links, law=law)
+#   detector = translator.translate_text(query, target_lang="DE")
+#   if lang != detector.detected_source_lang:
+#       answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
+  if lang != ('EN-GB' or 'DE'):
       detector = translator.translate_text(query, target_lang="DE")
-      #answer = translator.translate_text(answer, target_lang=detector.detected_source_lang).text
       answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
-  #return answer
+
   return answer_gpt
 #########
-
+llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
 
 chatbot_blueprint = Blueprint('chatbot', __name__)
 
@@ -191,14 +194,23 @@ def test_connection():
 def getResponse():
     # Get the message from the JSON request
     data = request.get_json()
-    user_message = data.get('message').strip('\"')
-    lang = data.get('lang').strip('\"')
-    law = data.get('law').strip('\"')
-    kanton = data.get('kanton').strip('\"')
-    current_app.logger.info(lang)
+    user_message = data.get('message')
+    lang = data.get('lang')
+    law = data.get('law')
+    kanton = data.get('kanton')
+    current_app.logger.info(law)
     current_app.logger.info(kanton)
     # If there's no message provided, return an error message
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
     response = qa_chatbot(user_message, lang, law, kanton)
     return response
+
+    
+@chatbot_blueprint.errorhandler(Exception)
+def handle_exception(e):
+# pass through HTTP errors
+    current_app.logger.exception(e)
+    if isinstance(e, HTTPException):
+        return e
+    return jsonify(error=str(e)), 500
