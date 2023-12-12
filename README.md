@@ -2,12 +2,13 @@
 
 ===  
 Backend instructions  
-1. Open terminal in LawPaw project  
+1. Manually add deepl_credential.json and openai_credential.json to the /backend folder  
+2. Open terminal in LawPaw project  
   > cd backend  
   > docker compose up -d  
   > docker compose exec ollama ollama run mistral  
   > docker compose logs -f  
-2. Manually add snapshots into qdrant (TODO: trying to automate it)  
+3. Manually add snapshots into qdrant
 
 ===  
 Frontend instructions  
