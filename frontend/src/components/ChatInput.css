@@ -1,5 +1,4 @@
 .chat-input {
-  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -11,6 +10,7 @@
   border-color: #012e40;
   padding: 0.7rem 1rem;
   max-width: 400px;
+  height: auto;
 }
 
 .chat-input form textarea::-webkit-scrollbar {
@@ -24,7 +24,7 @@
 
 /* Handle */
 .chat-input form textarea::-webkit-scrollbar-thumb {
-  background: #b0a695ab;
+  background: #ededed;
   border-radius: 11rem;
 }
 
@@ -44,6 +44,7 @@
   all: unset;
   width: 90%;
   height: auto;
+  max-height: 180px;
   overflow-y: auto;
   overflow-wrap: break-word;
   resize: none;
@@ -54,19 +55,18 @@
 }
 
 .chat-input form textarea::placeholder {
-  color: #b0a695;
+  color: #7e8a8c;
 }
 
 .chat-input form button {
   background-color: transparent;
   border-width: 0;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   font-size: 2rem;
 }
 
 .chat-input form button svg {
-  font-size: 1.4rem;
   transition: all ease-in-out 0.2s;
 }
 
@@ -76,7 +76,6 @@
       filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.7));
   } */
 
-.chat-input form button:active svg {
-  font-size: 2rem;
-  color: black;
+.chat-input form button svg.active {
+  color: #012E40 !important;
 }

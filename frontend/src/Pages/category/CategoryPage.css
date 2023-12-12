@@ -16,31 +16,41 @@
 
 .cat-select-container .cat-button {
   all: unset;
-  width: 37%;
-  min-height: 140px;
-  height: auto;
+  width: 148px;
+  /* min-height: 140px; */
+  height: 171px;
   display: flex;
-  padding: 14.532px 10.899px 10.899px 10.899px;
+  padding: 14.575px 10.931px 10.931px 10.931px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   border-radius: 9.083px;
   border: 2px solid transparent;
+  text-align: center;
+}
+
+.cat-select-container .cat-button img {
+  width: 53px;
+  height: 53px;
+  flex-shrink: 0;
 }
 
 .cat-select-container .cat-button .info-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 7.288px;
   align-self: stretch;
 }
 
 .cat-select-container .cat-button .info-container h4 {
   margin: 0;
-  /* color: #012e40; */
-  /* font-family: Roboto; */
-  /* font-size: 14px; */
+  width: 100%;
+  text-align: center;
   font-style: normal;
   font-weight: 600;
   line-height: 17.5px;

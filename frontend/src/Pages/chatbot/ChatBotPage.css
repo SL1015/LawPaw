@@ -11,6 +11,12 @@
     margin: 1rem;
 }
 
+.botpage-nav {
+  background-color: white ;
+  border-bottom: 1px solid var(--neutral-n-300, #D2D3D3);
+  height: 71px;
+}
+
 .botpage-nav .progress-title {
     display: flex;
     align-items: center;
@@ -34,6 +40,7 @@
     position: relative;
     width: 100%;
     height: 89svh;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;

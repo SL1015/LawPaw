@@ -22,6 +22,37 @@ const HomePage = () => {
     navigate("/homepage");
   };
 
+  const cantonsDE = [
+    { abbreviation: "all", name: "Alle Kantone" },
+    { abbreviation: "ag", name: "Aargau" },
+    { abbreviation: "ai", name: "Appenzell Innerrhoden" },
+    { abbreviation: "ar", name: "Appenzell Ausserrhoden" },
+    { abbreviation: "be", name: "Bern" },
+    { abbreviation: "bl", name: "Basel-Landschaft" },
+    { abbreviation: "bs", name: "Basel-Stadt" },
+    { abbreviation: "fr", name: "Freiburg" },
+    { abbreviation: "ge", name: "Genf" },
+    { abbreviation: "gl", name: "Glarus" },
+    { abbreviation: "gr", name: "Graubünden" },
+    { abbreviation: "ju", name: "Jura" },
+    { abbreviation: "lu", name: "Luzern" },
+    { abbreviation: "ne", name: "Neuenburg" },
+    { abbreviation: "nw", name: "Nidwald" },
+    { abbreviation: "ow", name: "Obwald" },
+    { abbreviation: "sg", name: "St. Gallen" },
+    { abbreviation: "sh", name: "Schaffhausen" },
+    { abbreviation: "so", name: "Soleure" },
+    { abbreviation: "sz", name: "Schwyz" },
+    { abbreviation: "tg", name: "Thurgovie" },
+    { abbreviation: "ti", name: "Tessin" },
+    { abbreviation: "ur", name: "Uri" },
+    { abbreviation: "vd", name: "Waadt" },
+    { abbreviation: "vs", name: "Wallis" },
+    { abbreviation: "zg", name: "Zoug" },
+    { abbreviation: "zh", name: "Zurich" },
+  ];
+  
+
   return (
     <>
     <FlipAlert />
@@ -46,168 +77,15 @@ const HomePage = () => {
             </p>
           </div>
           <div className="canton-select-container">
-            <button
-              className={`${selectedCanton === "all" ? "active" : ""}`}
-              onClick={() => handleCantonClick("all")}
-            >
-              <span>Alle Kantone</span>
-            </button>
-            <button
-              className={`${selectedCanton === "zh" ? "active" : ""}`}
-              onClick={() => handleCantonClick("zh")}
-            >
-              <span>Zürich</span>
-            </button>
-            <button
-              className={`${selectedCanton === "be" ? "active" : ""}`}
-              onClick={() => handleCantonClick("be")}
-            >
-              <span>Bern</span>
-            </button>
-            <button
-              className={`${selectedCanton === "lu" ? "active" : ""}`}
-              onClick={() => handleCantonClick("lu")}
-            >
-              <span>Luzern</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ur" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ur")}
-            >
-              <span>Uri</span>
-            </button>
-            <button
-              className={`${selectedCanton === "sz" ? "active" : ""}`}
-              onClick={() => handleCantonClick("sz")}
-            >
-              <span>Schwyz</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ow" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ow")}
-            >
-              <span>Obwalden</span>
-            </button>
-            <button
-              className={`${selectedCanton === "nw" ? "active" : ""}`}
-              onClick={() => handleCantonClick("nw")}
-            >
-              <span>Nidwalden</span>
-            </button>
-            <button
-              className={`${selectedCanton === "gl" ? "active" : ""}`}
-              onClick={() => handleCantonClick("gl")}
-            >
-              <span>Glarus</span>
-            </button>
-            <button
-              className={`${selectedCanton === "zg" ? "active" : ""}`}
-              onClick={() => handleCantonClick("zg")}
-            >
-              <span>Zug</span>
-            </button>
-            <button
-              className={`${selectedCanton === "fr" ? "active" : ""}`}
-              onClick={() => handleCantonClick("fr")}
-            >
-              <span>Freiburg</span>
-            </button>
-            <button
-              className={`${selectedCanton === "so" ? "active" : ""}`}
-              onClick={() => handleCantonClick("so")}
-            >
-              <span>Solothurn</span>
-            </button>
-            <button
-              className={`${selectedCanton === "bs" ? "active" : ""}`}
-              onClick={() => handleCantonClick("bs")}
-            >
-              <span>Basel-Stadt</span>
-            </button>
-            <button
-              className={`${selectedCanton === "bl" ? "active" : ""}`}
-              onClick={() => handleCantonClick("bl")}
-            >
-              <span>Basel-Landschaft</span>
-            </button>
-            <button
-              className={`${selectedCanton === "sh" ? "active" : ""}`}
-              onClick={() => handleCantonClick("sh")}
-            >
-              <span>Schaffhausen</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ar" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ar")}
-            >
-              <span>Appenzell Ausserrhoden</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ai" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ai")}
-            >
-              <span>Appenzell Innerrhoden</span>
-            </button>
-            <button
-              className={`${selectedCanton === "sg" ? "active" : ""}`}
-              onClick={() => handleCantonClick("sg")}
-            >
-              <span>St. Gallen</span>
-            </button>
-            <button
-              className={`${selectedCanton === "gr" ? "active" : ""}`}
-              onClick={() => handleCantonClick("gr")}
-            >
-              <span>Graubünden</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ag" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ag")}
-            >
-              <span>Aargau</span>
-            </button>
-            <button
-              className={`${selectedCanton === "tg" ? "active" : ""}`}
-              onClick={() => handleCantonClick("tg")}
-            >
-              <span>Thurgau</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ti" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ti")}
-            >
-              <span>Tessin</span>
-            </button>
-            <button
-              className={`${selectedCanton === "vd" ? "active" : ""}`}
-              onClick={() => handleCantonClick("vd")}
-            >
-              <span>Waadt</span>
-            </button>
-            <button
-              className={`${selectedCanton === "vs" ? "active" : ""}`}
-              onClick={() => handleCantonClick("vs")}
-            >
-              <span>Wallis</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ne" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ne")}
-            >
-              <span>Neuenburg</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ge" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ge")}
-            >
-              <span>Genf</span>
-            </button>
-            <button
-              className={`${selectedCanton === "ju" ? "active" : ""}`}
-              onClick={() => handleCantonClick("ju")}
-            >
-              <span>Jura</span>
-            </button>
+          {cantonsDE.map((canton) => (
+              <button
+              key={canton.abbreviation}
+              className={`${selectedCanton === canton.abbreviation ? "active" : ""}`}
+              onClick={() => handleCantonClick(canton.abbreviation)}
+              >
+                <span>{canton.name}</span>
+              </button>
+            ))}
             {/* <ScrollDownIcon /> */}
           </div>
         </div>
