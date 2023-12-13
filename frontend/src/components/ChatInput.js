@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChatInput.css";
+import { useParams } from "react-router-dom";
 // import SendBtn from "./Images/icons/send.svg";
 // import SendBtnInactive from "./Images/icons/send-inactive.svg";
 
@@ -10,7 +11,9 @@ const ChatInput = ({
   onSubmit,
   Language,
   isLoading,
+  formSubmited
 }) => {
+  const {language} = useParams();
   const myFormRef = useRef(null);
   const [isMessageEmpty, setIsMessageEmpty] = useState(true);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
@@ -41,8 +44,19 @@ const ChatInput = ({
     fr: "Demandez à votre LawPaw...",
   };
 
+  const spanTxt = {
+    en: "Share more about your situation for better assistance.",
+    de: "Teilen Sie uns mehr über Ihre Situation mit, damit wir Ihnen besser helfen können.",
+    fr: "Expliquez votre situation pour obtenir une meilleure assistance.",
+  }
+
+
+
   return (
+    <>
+    <span className={`info-input ${formSubmited ? "off" : ""}`}>{spanTxt[language]}</span>
     <div className="chat-input">
+      
       <form onSubmit={onSubmit} ref={myFormRef}>
         <textarea
           id="prompt-input"
@@ -100,6 +114,7 @@ const ChatInput = ({
         </button>
       </form>
     </div>
+    </>
   );
 };
 

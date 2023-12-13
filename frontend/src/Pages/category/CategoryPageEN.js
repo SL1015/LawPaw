@@ -19,16 +19,12 @@ const CategoryPageEN = () => {
   const [selectedCat, setSelectedCat] = useState("1");
 
   const handleCatClick = (cat) => {
-    if (cat === "0") {
-      setSelectedCat(cat);
-      handleSkipClick();
-    }
     setSelectedCat(cat);
   };
 
-  const handleSkipClick = () => {
-    navigate(`/${language}/${canton}/0`);
-  };
+  // const handleSkipClick = () => {
+  //   navigate(`/${language}/${canton}/0`);
+  // };
 
   const handleNavigateClick = () => {
     navigate(`/${language}/${canton}/${selectedCat}`);
@@ -44,7 +40,7 @@ const CategoryPageEN = () => {
       <section className="main-nav">
         <div className="progress-title">
           <h4>Step 3: Legal Path</h4>
-          <p onClick={() => handleCatClick("0")}>Skip</p>
+          <p onClick={() => navigate(`/${language}/${canton}/6`)}>Skip</p>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-three"></div>

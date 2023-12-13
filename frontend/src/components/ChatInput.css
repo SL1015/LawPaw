@@ -79,3 +79,18 @@
 .chat-input form button svg.active {
   color: #012E40 !important;
 }
+
+span.info-input {
+  margin: 0 auto;
+  color: #7e8a8c;
+  text-align: center;
+  font-family: Lato;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+span.info-input.off {
+  display: none;
+}

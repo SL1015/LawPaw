@@ -87,6 +87,7 @@ const ChatBox = ({ Language, Canton, Category }) => {
           onSubmit={handleSubmit}
           Language={Language}
           isLoading={isLoading}
+          formSubmited={formSubmitted}
         />
       </section>
       <SelectQuestions

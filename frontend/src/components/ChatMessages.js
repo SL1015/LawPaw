@@ -8,6 +8,7 @@ import Typed from "react-typed";
 // import AutoLinkText from "react-autolink-text2";
 
 const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
+  // eslint-disable-next-line
   const [displayedResponse, setDisplayedResponse] = useState(""); 
   const [responseIndex, setResponseIndex] = useState(0);
   const messagesEndRef = useRef(null);
@@ -50,10 +51,10 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
     return message.split(urlRegex).map((part, index) => {
       if (part.match(urlRegex)) {
         let link = part.replace(/[\])}]+$/, "");
-        let last = part.slice(-1);
+        // let last = part.slice(-1);
         return (
           <a key={index} href={link} target="_blank" rel="noopener noreferrer">
-            Link🔗{last}
+            Link🔗
           </a>
         );
       } else {

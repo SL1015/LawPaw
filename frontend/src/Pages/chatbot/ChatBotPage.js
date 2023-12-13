@@ -152,6 +152,85 @@ export default function ChatBotPage() {
   const filteredCantons = showMoreCantons ? firstFilteredCantons : firstFilteredCantons.slice(0, 4);
   const selectedCanton = cantonsLanguages.find((c) => c.abbreviation === canton);
 
+  const settingsLanguages = {
+    English: {
+      en: "English",
+      de: "Englisch",
+      fr: "Anglais"
+    },
+    German: {
+      en: "German",
+      de: "Deutsch",
+      fr: "Allemand"
+    },
+    French: {
+      en: "French",
+      de: "Französisch",
+      fr: "Français"
+    }
+  }
+
+  const settingsCategories = {
+    Contract: {
+      en: "Contract",
+      de: "Vertrag",
+      fr: "Contrat"
+    },
+    Employment: {
+      en: "Employment",
+      de: "Beschäftigung",
+      fr: "Emploi"
+    },
+    Rental: {
+      en: "Rental",
+      de: "Vermietung",
+      fr: "Location"
+    },
+    Family: {
+      en: "Family",
+      de: "Familie",
+      fr: "Famille"
+    },
+    Inheritance: {
+      en: "Inheritance",
+      de: "Vererbung",
+      fr: "Héritage"
+    },
+    Others: {
+      en: "Others",
+      de: "Andere",
+      fr: "Autres"
+    }
+  }
+
+  const settingsTitles = {
+    Settings: {
+      en: "Settings",
+      de: "Einstellungen",
+      fr: "Paramètres"
+    },
+    Done: {
+      en: "Done",
+      de: "Erledigt",
+      fr: "Terminé"
+    },
+    Language: {
+      en: "Language",
+      de: "Sprache",
+      fr: "Langue"
+    },
+    Canton: {
+      en: "Canton",
+      de: "Kanton",
+      fr: "Canton"
+    },
+    Category: {
+      en: "Category",
+      de: "Kategorie",
+      fr: "Catégorie"
+    },
+  }
+
   return (
     <>
       <FlipAlert />
@@ -176,78 +255,36 @@ export default function ChatBotPage() {
       <div className={`settings-container ${settingsBox ? "active" : ""}`}>
         <div className="settings-nav">
           <img src={closeIcon} alt="Close icon" onClick={handleCloseSettings} />
-          <h4>Settings</h4>
-          <span onClick={handleSubmitSettings}>Done</span>
+          <h4>{settingsTitles['Settings'][language]}</h4>
+          <span onClick={handleSubmitSettings}>{settingsTitles['Done'][language]}</span>
         </div>
         <div className="settings-options-container">
           <div className="options-div settings-language">
-            <h3>Language</h3>
+            <h3>{settingsTitles['Language'][language]}</h3>
             <div className="settings-button-container">
               <button
                 className={settingsLanguage === "en" ? "active" : ""}
                 onClick={() => handleChangeLanguage("en")}
               >
-                English
+                {settingsLanguages['English'][language]}
               </button>
               <button
                 className={settingsLanguage === "de" ? "active" : ""}
                 onClick={() => handleChangeLanguage("de")}
               >
-                German
+                {settingsLanguages['German'][language]}
               </button>
               <button
                 className={settingsLanguage === "fr" ? "active" : ""}
                 onClick={() => handleChangeLanguage("fr")}
               >
-                French
+                {settingsLanguages['French'][language]}
               </button>
             </div>
           </div>
           <div className="options-div settings-canton">
-            <h3>Canton</h3>
+            <h3>{settingsTitles['Canton'][language]}</h3>
             <div className="settings-button-container">
-              {/* <button
-                className={settingsCanton === "all" ? "active" : ""}
-                onClick={() => handleChangeCanton("all")}
-              >
-                All Cantons
-              </button>
-              <button
-                className={settingsCanton === "ag" ? "active" : ""}
-                onClick={() => handleChangeCanton("ag")}
-              >
-                Aargau
-              </button>
-              <button
-                className={settingsCanton === "ai" ? "active" : ""}
-                onClick={() => handleChangeCanton("ai")}
-              >
-                Appenzell Inner-Rhodes
-              </button>
-              <button
-                className={settingsCanton === "ar" ? "active" : ""}
-                onClick={() => handleChangeCanton("ar")}
-              >
-                Appenzell Outer-Rhodes
-              </button>
-              <button
-                className={settingsCanton === "be" ? "active" : ""}
-                onClick={() => handleChangeCanton("be")}
-              >
-                Bern
-              </button>
-              <button
-                className={settingsCanton === "bl" ? "active" : ""}
-                onClick={() => handleChangeCanton("bl")}
-              >
-                Basel-Country
-              </button>
-              <button
-                className={settingsCanton === "bs" ? "active" : ""}
-                onClick={() => handleChangeCanton("bs")}
-              >
-                Basel-City
-              </button> */}
               <button
                 key={selectedCanton.abbreviation}
                 className={
@@ -275,43 +312,43 @@ export default function ChatBotPage() {
             </span>
           </div>
           <div className="options-div settings-category">
-            <h3>Category</h3>
+            <h3>{settingsTitles['Category'][language]}</h3>
             <div className="settings-button-container">
               <button
                 className={settingsCategory === "1" ? "active" : ""}
                 onClick={() => handleChangeCat("1")}
               >
-                Contract
+                {settingsCategories["Contract"][language]}
               </button>
               <button
                 className={settingsCategory === "2" ? "active" : ""}
                 onClick={() => handleChangeCat("2")}
               >
-                Rental
+                {settingsCategories["Rental"][language]}
               </button>
               <button
                 className={settingsCategory === "3" ? "active" : ""}
                 onClick={() => handleChangeCat("3")}
               >
-                Family
+                {settingsCategories["Family"][language]}
               </button>
               <button
                 className={settingsCategory === "4" ? "active" : ""}
                 onClick={() => handleChangeCat("4")}
               >
-                Employment
+                {settingsCategories["Employment"][language]}
               </button>
               <button
                 className={settingsCategory === "5" ? "active" : ""}
                 onClick={() => handleChangeCat("5")}
               >
-                Inheritance
+                {settingsCategories["Inheritance"][language]}
               </button>
               <button
                 className={settingsCategory === "6" ? "active" : ""}
                 onClick={() => handleChangeCat("6")}
               >
-                Others
+                {settingsCategories["Others"][language]}
               </button>
             </div>
           </div>
