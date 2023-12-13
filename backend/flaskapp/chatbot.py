@@ -164,8 +164,9 @@ def qa_chatbot(query, lang, law,kanton):
     answer_gpt = "Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!"
   else:
     current_app.logger.info('Answer found.')
-    answer_gpt = answer_gpt + f'\n\nFor more information, please check the following links: {links}'
+    answer_gpt = answer_gpt + '\n\nFor more information, please check the following links: ' + f'\n{links[0]} \n{links[1]} \n{links[2]}'
   if lang != 'EN-GB':
+    current_app.logger.info(answer_gpt)
     detector = translator.translate_text(query, target_lang="DE")
     answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
   return answer_gpt
@@ -177,8 +178,7 @@ llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
 chatbot_blueprint = Blueprint('chatbot', __name__)
 
 # running llm model docker image
-ollama = Ollama(base_url='http://ollama:11434',
-model="mistral")
+#ollama = Ollama(base_url='http://ollama:11434',model="mistral")
 
 # Qdrant host and port
 client = QdrantClient(host="qdrant", port=6333)
