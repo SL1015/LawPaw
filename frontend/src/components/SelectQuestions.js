@@ -3,37 +3,9 @@ import React, { useState } from "react";
 import lawLogo from "./Images/LawPaw.png";
 import { useParams } from "react-router-dom";
 
-const SelectQuestions = ({ onSelectQuestion, submitted }) => {
+const SelectQuestions = ({ onSelectQuestion, submitted, submitQuestion }) => {
   const [selectedQuestion, setSelectedQuestion] = useState("");
   const { language, category } = useParams();
-
-
-  // const questionData = {
-  //   en: [
-  //     "Can you advise on key contract considerations?",
-  //     "What remedies apply to civil wrongs?",
-  //     "Any tips for buying property?",
-  //     "Could you explain basics of child custody?",
-  //     "Can you guide me on starting a business?",
-  //     "How does the inheritance process work?",
-  //   ],
-  //   fr: [
-  //     "Conseils sur les points essentiels d'un contrat?",
-  //     "Quels recours en cas torts civils?",
-  //     "Des conseils pour l'achat d'un bien immobilier?",
-  //     "Les principes de base de la garde des enfants?",
-  //     "Guide pour la création d'une entreprise?",
-  //     "Comment fonctionne le processus d'héritage?",
-  //   ],
-  //   de: [
-  //     "Beratung Vertragsaspekte?",
-  //     "Zivilrecht Rechtsbehelfe?",
-  //     "Irgendwelche Tipps für den Immobilienkauf?",
-  //     "Grundlagen Kinder-Sorgerecht?",
-  //     "Unternehmensgründung Hilfe?",
-  //     "Wie funktioniert das Erbschaftsverfahren?",
-  //   ],
-  // };
 
   const questionData = {
     en: { // English
@@ -140,12 +112,6 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
     fr: "Comment puis-je vous aider aujourd'hui?",
   }
 
-  const spanTxt = {
-    en: "Share more about your situation for better assistance.",
-    de: "Teilen Sie uns mehr über Ihre Situation mit, damit wir Ihnen besser helfen können.",
-    fr: "Expliquez votre situation pour obtenir une meilleure assistance.",
-  }
-
   const title = sugestedQuetionsTitle[language];
   const questions = questionData[language][category] || [];
   return (
@@ -167,7 +133,6 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
           </li>
         ))}
       </ul>
-      <span>{spanTxt[language]}</span>
     </div>
   );
 };

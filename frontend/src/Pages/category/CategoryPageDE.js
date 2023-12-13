@@ -133,8 +133,8 @@ const CategoryPageEN = () => {
             >
               <img src={Cat6} alt="Tort icon" />
               <div className="info-container">
-                <h4>Deliktsrecht</h4>
-                <p>Beratung zu zivilrechtlichen Streitigkeiten.</p>
+                <h4>Andere</h4>
+                <p>Unabhängig von der Rechtskategorie, Ihr Buddy ist da, um zu helfen!</p>
               </div>
             </button>
             {/* <ScrollDownIcon /> */}
