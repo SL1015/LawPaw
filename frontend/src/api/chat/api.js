@@ -18,13 +18,19 @@ export const sendMessageToAPI = async (message, language, canton, category) => {
     }
 
     console.log(`Message: ${message}, Lang: ${languageFilter}, Canton: ${canton}, Cat: ${category}, Law: ${categoryFilter} `);
+    console.log({
+      'message': message,
+      'lang': languageFilter,
+      'kanton': canton,
+      'law': categoryFilter
+    })
   
-    const response = await axios.post("http://localhost:5000/chatbot",
+    const response = await axios.post("http://127.0.0.1:5000/chatbot",
     {
-      "message": message,
-      "lang": languageFilter,
-      "kanton": canton,
-      "law": categoryFilter
+      'message': message,
+      'lang': languageFilter,
+      'kanton': canton,
+      'law': categoryFilter
     });
     return response.data;
   } catch (error) {

@@ -127,7 +127,7 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
         "Are my stepbrothers or stepsisters legally entitled to inherit?",
       ],
       6: [ // Others
-        "Can my employer fire me when I’m sick?",
+        "Can my employer fire me when I'm sick?",
         "How long is the maternity leave?",
         "When can I contest rent?",
       ],
@@ -148,7 +148,6 @@ const SelectQuestions = ({ onSelectQuestion, submitted }) => {
 
   const title = sugestedQuetionsTitle[language];
   const questions = questionData[language][category] || [];
-  console.log(questions);
   return (
     <div className={`questions-container ${submitted ? "submitted" : ""}`} >
       <img className="questions-logo" src={lawLogo} alt="LawPaw Logo" />

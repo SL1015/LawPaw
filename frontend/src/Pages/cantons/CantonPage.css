@@ -37,7 +37,12 @@
 }
 
 .canton-select-container button.active {
-  background-color: #a7c5c5;
+  background: conic-gradient(
+    from 176deg at 50.15% 50.15%,
+    rgba(225, 183, 159, 0.5) 7.117450162768364deg,
+    rgba(167, 197, 197, 0.5) 163.1180477142334deg,
+    rgba(249, 170, 52, 0.5) 276.7651963233948deg
+  );
 }
 
 .options-container {
