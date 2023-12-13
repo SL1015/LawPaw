@@ -90,7 +90,7 @@ def doc_to_rscope(docs):
 
 def get_top_results(hit_lst):
     sorted_Lst = sorted(hit_lst, key=lambda x:x.score,reverse = True)
-    return sorted_Lst[:4]
+    return sorted_Lst[:3]
 
 def query_embedding(query,lang,embedding_lang):
     if lang != embedding_lang:
@@ -102,7 +102,7 @@ def search_db(client,query_vecs,collection):
     hits=client.search(
             collection_name=collection,
             query_vector = query_vecs,
-            limit=4
+            limit=3
         )
     return hits
 
