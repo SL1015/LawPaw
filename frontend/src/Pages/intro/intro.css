@@ -57,6 +57,9 @@
   border-color: #a7c5c5;
   background-color: #012e40;
   color: white;
+  font-family: Inter;
   font-size: 16px;
-  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
 }

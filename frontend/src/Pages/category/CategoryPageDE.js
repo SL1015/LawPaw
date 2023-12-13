@@ -16,7 +16,7 @@ const CategoryPageEN = () => {
   // console.log("Language:", language);
   // console.log("Canton:", canton);
   const navigate = useNavigate();
-  const [selectedCat, setSelectedCat] = useState("1");
+  const [selectedCat, setSelectedCat] = useState("");
 
   const handleCatClick = (cat) => {
     setSelectedCat(cat);
@@ -27,7 +27,11 @@ const CategoryPageEN = () => {
   };
 
   const handleNavigateClick = () => {
-    navigate(`/${language}/${canton}/${selectedCat}`);
+    if (selectedCat === "") {
+      window.alert("Please Select one option first.");
+    } else {
+      navigate(`/${language}/${canton}/${selectedCat}`);
+    }
   };
 
   const handleBackClick = () => {
@@ -46,7 +50,7 @@ const CategoryPageEN = () => {
           <div className="progress-bar-three"></div>
         </div>
       </section>
-      <section className="main-section">
+      <section className="main-section category-page">
         <div className="options-container">
           <div className="title-container">
             <h1>

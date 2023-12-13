@@ -8,15 +8,21 @@ import FlipAlert from "../../components/FlipAlert";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [defaultLanguage, setDefaultLanguage] = useState("en")
 
   const handleLanguageClick = (language) => {
     setSelectedLanguage(language);
+    setDefaultLanguage(language)
     // console.log(selectedLanguage);
   };
 
   const handleNavigateClick = () => {
-    navigate(`/${selectedLanguage}`);
+    if (selectedLanguage === "") {
+      navigate(`/${defaultLanguage}`);
+    } else {
+      navigate(`/${selectedLanguage}`);
+    }
   };
 
   const navTitle = {
@@ -50,7 +56,7 @@ const HomePage = () => {
     <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
-          <h4>{navTitle[selectedLanguage]}</h4>
+          <h4>{navTitle[defaultLanguage]}</h4>
         </div>
         <div className="progress-bar-container">
           <div className="progress-bar-one"></div>
@@ -59,9 +65,9 @@ const HomePage = () => {
       <section className="main-section">
         <div className="options-container">
           <div className="title-container">
-            <h1>{pagTitleOne[selectedLanguage]}<br />{pagTitleTwo[selectedLanguage]}</h1>
+            <h1>{pagTitleOne[defaultLanguage]}<br />{pagTitleTwo[defaultLanguage]}</h1>
             <p>
-            {subtitle[selectedLanguage]}
+            {subtitle[defaultLanguage]}
             </p>
           </div>
           <div className="lang-select-container">
@@ -89,7 +95,7 @@ const HomePage = () => {
           </div>
         </div>
         <nav className="navigation-bar">
-          <button className="homepage-button" onClick={() => handleNavigateClick({selectedLanguage})}>{buttonText[selectedLanguage]}</button>
+          <button className="homepage-button" onClick={() => handleNavigateClick()}>{buttonText[defaultLanguage]}</button>
         </nav>
       </section>
     </>

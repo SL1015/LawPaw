@@ -50,7 +50,7 @@ const ChatMessages = ({ clientInputs, botResponses, isLoading }) => {
 
     return message.split(urlRegex).map((part, index) => {
       if (part.match(urlRegex)) {
-        let link = part.replace(/[\])}]+$/, "");
+        let link = part.replace(/[\])}',]+$/, "");
         // let last = part.slice(-1);
         return (
           <a key={index} href={link} target="_blank" rel="noopener noreferrer">

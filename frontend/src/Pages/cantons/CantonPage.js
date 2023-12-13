@@ -8,14 +8,19 @@ import FlipAlert from "../../components/FlipAlert";
 const HomePage = () => {
   const { language } = useParams();
   const navigate = useNavigate();
-  const [selectedCanton, setSelectedCanton] = useState("all");
+  const [selectedCanton, setSelectedCanton] = useState("");
 
   const handleCantonClick = (canton) => {
     setSelectedCanton(canton);
   };
 
   const handleNavigateClick = () => {
+    if (selectedCanton === "") {
+      window.alert("Please Select one option first.");
+    } else {
+      
     navigate(`/${language}/${selectedCanton}`);
+    }
   };
 
   const handleBackClick = () => {

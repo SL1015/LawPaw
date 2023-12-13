@@ -8,14 +8,18 @@ import FlipAlert from "../../components/FlipAlert";
 const HomePage = () => {
   const { language } = useParams();
   const navigate = useNavigate();
-  const [selectedCanton, setSelectedCanton] = useState("all");
+  const [selectedCanton, setSelectedCanton] = useState("");
 
   const handleCantonClick = (canton) => {
     setSelectedCanton(canton);
   };
 
   const handleNavigateClick = () => {
-    navigate(`/${language}/${selectedCanton}`);
+    if (selectedCanton === "") {
+      window.alert("Please Select one option first.");
+    } else {
+      navigate(`/${language}/${selectedCanton}`);
+    }
   };
 
   const handleBackClick = () => {
@@ -51,11 +55,10 @@ const HomePage = () => {
     { abbreviation: "zg", name: "Zoug" },
     { abbreviation: "zh", name: "Zurich" },
   ];
-  
 
   return (
     <>
-    <FlipAlert />
+      <FlipAlert />
       <section className="main-nav">
         <div className="progress-title">
           <h4>Schritt 3: Kanton</h4>
@@ -77,11 +80,13 @@ const HomePage = () => {
             </p>
           </div>
           <div className="canton-select-container">
-          {cantonsDE.map((canton) => (
+            {cantonsDE.map((canton) => (
               <button
-              key={canton.abbreviation}
-              className={`${selectedCanton === canton.abbreviation ? "active" : ""}`}
-              onClick={() => handleCantonClick(canton.abbreviation)}
+                key={canton.abbreviation}
+                className={`${
+                  selectedCanton === canton.abbreviation ? "active" : ""
+                }`}
+                onClick={() => handleCantonClick(canton.abbreviation)}
               >
                 <span>{canton.name}</span>
               </button>

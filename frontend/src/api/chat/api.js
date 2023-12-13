@@ -26,7 +26,7 @@ export const sendMessageToAPI = async (message, language, canton, category) => {
       `Message: ${message}, Lang: ${languageFilter}, Canton: ${canton}, Cat: ${category}, Law: ${categoryFilter} `
     );
 
-    const response = await axios.post("http://127.0.0.1:5000/chatbot", {
+    const response = await axios.post("http://89.217.241.28:5000/chatbot", {
       message: message,
       lang: languageFilter,
       kanton: canton,

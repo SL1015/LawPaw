@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: space-between;
   height: 89svh;
+  background-image: url("../../components/Images/Location.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .title-container {
@@ -64,7 +68,12 @@
 }
 
 .lang-select-container button span {
-  color: black;
+  color: #363939;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17.5px;
 }
 
 .lang-select-container button.active {
@@ -75,6 +84,10 @@
     rgba(249, 170, 52, 0.5) 276.7651963233948deg
   ); */
   background-color: #a7c5c5;
+}
+
+.lang-select-container button.active span {
+  color: #012E40;
 }
 
 .canton-select-container {
@@ -105,6 +118,10 @@
   border-color: #a7c5c5;
   background-color: #012e40;
   color: white;
+  font-family: Inter;
   font-size: 16px;
-  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.4px;
 }

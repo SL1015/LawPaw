@@ -25,7 +25,12 @@
 }
 
 .canton-select-container button span {
-  color: black;
+  color: #363939;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17.5px;
 }
 
 .canton-select-container button:last-child {
@@ -40,6 +45,9 @@
     rgba(249, 170, 52, 0.5) 276.7651963233948deg
   ); */
   background-color: #a7c5c5;
+}
+.canton-select-container button.active span {
+  color: #012E40;
 }
 
 .options-container {
@@ -81,8 +89,12 @@
   border-width: 1px;
   background-color: #012e40;
   color: white;
+  font-family: Inter;
   font-size: 16px;
-  letter-spacing: 1px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.3px;
   white-space: nowrap;
 }
 
@@ -93,8 +105,12 @@
   height: 48px;
   border-width: 0px;
   background-color: transparent;
-  color: #b1b2b2;
+  color: #636c6e;
+  font-family: Inter;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   letter-spacing: 1px;
   cursor: pointer;
 }

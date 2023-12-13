@@ -1,3 +1,8 @@
+.category-page {
+  background-color: white;
+  background-image: none;
+}
+
 .cat-select-container {
   height: 70%;
   display: flex;
@@ -59,6 +64,8 @@
 .cat-select-container .cat-button .info-container p {
   margin: 0;
   color: #636c6e;
+  text-align: center;
+  font-family: Inter;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -129,9 +136,12 @@
   border-width: 1px;
   background-color: #012e40;
   color: white;
+  font-family: Inter;
   font-size: 16px;
-  letter-spacing: 1px;
-  white-space: nowrap;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.3px;
 }
 
 .nav-bar-cat .back-button {
@@ -141,8 +151,12 @@
   height: 48px;
   border-width: 0px;
   background-color: transparent;
-  color: #b1b2b2;
+  color: #636c6e;
+  font-family: Inter;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   letter-spacing: 1px;
   cursor: pointer;
 }
