@@ -113,6 +113,8 @@ def search_context(query,lang,law,kanton):
         query_vecs_de = query_embedding(query,lang,'DE')
         collection1 = 'swiss-'+kanton
         hits = search_db(client,query_vecs_de,collection1)
+        for hit in hits:
+            hit.score -= 0.04
         hit_lst+=hits
     if law == 'OR':
         query_vecs_en = query_embedding(query,lang,'EN-GB')
@@ -140,37 +142,35 @@ os.environ['OPENAI_API_KEY'] = key_openai['key'][0]
 def qa_chatbot(query, lang, law,kanton):
   context_raw = search_context(query, lang,law,kanton)
   for hit in context_raw:
-      current_app.logger.debug(hit.score)
+      current_app.logger.info(hit.score)
   context,links = doc_to_rscope(context_raw)
   memory = ConversationBufferMemory(k=10,memory_key='chat_history')
   chat_text = f"""
-
   You are a legal assistant expert on the Swiss Private Law.
   Summarize your answer exclusively based on the context provided and do the translation as needed. For example, the query can be in English but the context provided can be in German. In this case, translate the context to English and see if an answer can be summarized or provided.
-  If an answer can be found in the provided context, please provide a summary of the relevant article(s), along with the source link(s) for reference. The souce link(s) should be from the following collection {links}. If there's nothing in the collection, do not provide the link information.
-  The relevant articles are originated from law: {law}. If the source law is not specified, please figure it out by referring to the provided source links.
-  If the question is not covered by the provided context, please indicate so by saying only the following sentence: 'Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!' and no more. This message should be in the same language as the question.
-  
+  If an answer can be found in the provided context, please provide a summary of the relevant article(s).
+  If the question is not covered by the provided context, please indicate so and start the answer with '!@#$'.
   Context: {context}
   Question: {query}
-
   """
-  #print(context)
   prompt_template = ChatPromptTemplate.from_template(chat_text)
   #ollama_llm_chain = LLMChain(prompt=prompt_template, llm=ollama)
   gpt_llm_chain = LLMChain(prompt=prompt_template, llm=llm)
   # answer = ollama_llm_chain.run(context=chat_text,
   #                           query=query,source_links=links)
-
-  answer_gpt = gpt_llm_chain.run(context=chat_text, query=query, source_links=links, law=law)
-#   detector = translator.translate_text(query, target_lang="DE")
-#   if lang != detector.detected_source_lang:
-#       answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
-  if lang != ('EN-GB' or 'DE'):
-      detector = translator.translate_text(query, target_lang="DE")
-      answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
-
+  answer_gpt = gpt_llm_chain.run(context=chat_text, query=query, source_links=links)
+  
+  if '!@#$' in answer_gpt:
+    answer_gpt = "Whoopsie! It seems we took a detour from the legal zone. Let's hop back to law talk. Ask me anything about contracts, family law, or legal advice!"
+  else:
+    current_app.logger.info('Answer found.')
+    answer_gpt = answer_gpt + f'\n\nFor more information, please check the following links: {links}'
+  if lang != 'EN-GB':
+    detector = translator.translate_text(query, target_lang="DE")
+    answer_gpt = translator.translate_text(answer_gpt, target_lang=detector.detected_source_lang).text
   return answer_gpt
+
+
 #########
 llm = ChatOpenAI(model='gpt-3.5-turbo',temperature = 0.1)
 
